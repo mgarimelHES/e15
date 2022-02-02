@@ -9,6 +9,7 @@
 
 <body>
     <h1> Practice Application e-15</h1>
+    <img src='images/hes-logo.png'>
 </body>
 
 </html>
