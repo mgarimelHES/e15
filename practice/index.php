@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <h1> Practice Application e-15</h1>
+    <h1> Practice Application e-15 Spring2022</h1>
     <img src='images/hes-logo.png'>
 </body>
 
