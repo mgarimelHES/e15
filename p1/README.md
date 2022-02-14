@@ -3,7 +3,8 @@
 + URL: http://e15p1.hesweb.me
 
 ## Outside resources
-*php.net*
+*php.net*;
+
 *w3schools.com/tags*
 
 ## Notes for instructor
