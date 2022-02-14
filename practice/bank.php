@@ -17,4 +17,19 @@ $quarters = 34;
 # Add up how much money is in the piggy bank
 $total = ($pennies * $penny_value) + ($nickels * $nickel_value) + ($dimes * $dime_value) + ($quarters * $quarter_value);
 
+// test assignment2
+$x =0;
+if (isset($x)) {
+    $y = $x;
+    echo $y;
+} else {
+    $y = 1;
+    echo $y;
+}
+$y = $x ?? 1;
+var_dump($y);
+$y =  (isset($x)) ? $y=1: $y=2;
+echo  $y;
+//end test
+
 require 'bank-view.php';
