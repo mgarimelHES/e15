@@ -1,0 +1,56 @@
+body {
+    background-color: powderblue;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: auto;
+    margin-top: 20px;
+    width: 500px;
+    text-align: center;
+  }
+
+  h1 {
+    color: blue;
+  }
+
+.input {
+    font-weight: bold;
+    margin: 15px;
+}
+
+
+.palindrome {
+    font-weight: bold;
+    margin: 15px;
+}
+.yesPalindrome {
+    color: green;
+    font-weight: bold;
+  }
+
+.noPalindrome {
+    color: red;
+    font-weight: bold;
+  }
+
+.vowel {
+    font-weight: bold;
+    margin: 15px;
+}
+
+.word {
+    font-weight: bold;
+    margin: 15px;
+}
+
+.shift {
+    font-weight: bold;
+    margin: 15px;
+}
+
+results {
+    margin: 10px;
+}
+
+game {
+  margin: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+}
