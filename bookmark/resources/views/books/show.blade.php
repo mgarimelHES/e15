@@ -1,34 +1,21 @@
- <!doctype html>
- <html lang='en'>
+@extends('layouts/main')
 
- <head>
-     <title>{{ $title }}</title>
-     <meta charset='utf-8'>
-     <link href='/css/bookmark.css' type='text/css' rel='stylesheet'>
- </head>
+@section('title')
+    {{ $title }}
+@endsection
 
- <body>
+@section('head')
+    <link href='/css/books/show.css' rel='stylesheet'>
+@endsection
 
-     <header>
-         <a href='/'><img src='/images/bookmark-logo@2x.png' id='logo' alt='Bookmark Logo'></a>
-     </header>
+@section('content')
+    @if ($bookFound)
+        <h1>{{ $title }}</h1>
 
-     <section>
-         @if ($bookFound)
-             <h1>{{ $title }}</h1>
-
-             <p>
-                 Details about this book will go here...
-             </p>
-         @else
-             Book not found! <a href='/books'>View all the books</a>
-         @endif
-     </section>
-
-     <footer>
-         &copy; Bookmark, Inc.
-     </footer>
-
- </body>
-
- </html>
+        <p>
+            Details about this book will go here...
+        </p>
+    @else
+        Book not found! <a href='/books'>View all the books</a>
+    @endif
+@endsection
