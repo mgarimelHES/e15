@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ParkController;
+use App\Http\Controllers\PageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', [PageController::class, 'welcome']);
+Route::get('/contact', [PageController::class, 'contact']);
+
+Route::get('/parkings', [ParkController::class, 'index']);
+
+Route::get('/parkings/{vehicle}', [ParkController::class, 'show']);
+Route::get('/parkings/filter/{category}/{subcategory}', [ParkController::class, 'filter']);
+
+Route::get('/parking/{id}', function ($id) {
+    return 'Your parking information vehicle #'.$id;
+});
+
+/*
 Route::get('/', function () {
     return view('welcome');
 });
+*/
