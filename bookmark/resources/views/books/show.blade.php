@@ -1,7 +1,7 @@
 @extends('layouts/main')
 
 @section('title')
-    {{ $title }}
+    {{ $book ? $book['title'] : 'Book not found' }}
 @endsection
 
 @section('head')
@@ -9,13 +9,18 @@
 @endsection
 
 @section('content')
-    @if ($bookFound)
-        <h1>{{ $title }}</h1>
-
-        <p>
-            Details about this book will go here...
-        </p>
+    @if (!$book)
+        Book not found. <a href='/books'>Check out the other books in our library...</a>
     @else
-        Book not found! <a href='/books'>View all the books</a>
+        <img class='cover' src='{{ $book['cover_url'] }}' alt='Cover photo for {{ $book['title'] }}'>
+
+        <h1>{{ $book['title'] }}</h1>
+
+        <a href='{{ $book['purchase_url'] }}'>Purchase...</a>
+
+        <p class='description'>
+            {{ $book['description'] }}
+            <a href='{{ $book['info_url'] }}'>Learn more...</a>
+        </p>
     @endif
 @endsection

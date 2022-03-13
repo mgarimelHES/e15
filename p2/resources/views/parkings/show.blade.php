@@ -1,18 +1,17 @@
 @extends('layouts/main')
 
 @section('title')
-    {{ $vehicle }}
+    {{ $parking ? $parking['lot'] : 'Lot not found' }}
 @endsection
 
 @section('head')
     {{-- Parking Page specific CSS includes should be defined here; --}}
     <link href='/css/parkings/show.css' rel='stylesheet'>
 @endsection
-
-@section('content')
+{{-- @section('content')
     <link href='/css/parkings/show.css' rel='stylesheet'>
     @if ($parkingFound)
-        <h1>{{ $vehicle }}</h1>
+        <h1>{{ $slug }}</h1>
         <nav>
             <a href="contact">Contact</a> |
             <a href="welcome">Welcome</a> |
@@ -63,14 +62,14 @@
                                 <input type='checkbox' name='terms' id='terms' required value='terms'>
 
                                 <textarea readonly id='rules' name='rules' rows='7' cols='80' wrap>
-                                It is important that you should follow our parking lot rules in order to keep our parking lot safe and clean. We expect that you will respect our parking lot and treat it with the same care that
-                                you would any other space in our building. You shall not: litter, shall not speed and follow the parking lot limit of [5 miles/hr], shall respect others’ property and vehicles, shall not park overnight. Overnight parked vehciles will be towed at the owner's expense.
+                                                            It is important that you should follow our parking lot rules in order to keep our parking lot safe and clean. We expect that you will respect our parking lot and treat it with the same care that
+                                                            you would any other space in our building. You shall not: litter, shall not speed and follow the parking lot limit of [5 miles/hr], shall respect others’ property and vehicles, shall not park overnight. Overnight parked vehciles will be towed at the owner's expense.
 
-                                If there are any specific challenges in your surroundings, such as others walking their dog through the parking lot and leaving a mess, you may want to address those issues in the parking lot rules section as well
-                                You may also want to outline rules against certain types of parking, such as ‘diagonal parking,’ when someone parks diagonally in order to take up two spaces and reduce the chance of another vehicle parking beside their car
-                                                                                                                                                                                                                    
-                                If you have access control systems such as keypads or barrier gates, you may want to include any rules about their use in this section (e.g. ‘staff employees are not permitted to share access control codes with anyone outside the workplace’)
-                                </textarea>
+                                                            If there are any specific challenges in your surroundings, such as others walking their dog through the parking lot and leaving a mess, you may want to address those issues in the parking lot rules section as well
+                                                            You may also want to outline rules against certain types of parking, such as ‘diagonal parking,’ when someone parks diagonally in order to take up two spaces and reduce the chance of another vehicle parking beside their car
+                                                                                                                                                                                                                                                
+                                                            If you have access control systems such as keypads or barrier gates, you may want to include any rules about their use in this section (e.g. ‘staff employees are not permitted to share access control codes with anyone outside the workplace’)
+                                                            </textarea>
                                 <p>---->Please place the parking receipt on your car dashboard <---- </p>
                                         <label>Get Your Parking Receipt</label>
 
@@ -83,5 +82,22 @@
                 </form>
             @else
                 Parking Reciept not found! <a href='/parkings'>View all the parkings</a>
+    @endif
+@endsection --}}
+
+@section('content')
+    @if (!$parking)
+        Parking Receipt not found. <a href='/parkings'>Check out the other parking receipts in the current history...</a>
+    @else
+        <img class='cover' src='{{ $parking['plate_img'] }}' alt='Cover photo for {{ $parking['lot'] }}'>
+
+        <h1>{{ $parking['lot'] }}</h1>
+
+        <a href='{{ $parking['hes_parking_url'] }}'>HES Parking Information...</a>
+
+        <p class='description'>
+            {{ $parking['terms'] }}
+            <a href='{{ $parking['hes_parking_url'] }}'>Learn more HERE!...</a>
+        </p>
     @endif
 @endsection
