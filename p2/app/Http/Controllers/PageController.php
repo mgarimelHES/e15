@@ -26,4 +26,17 @@ class PageController extends Controller
         
         return view('pages/contact');
     }
+    //Test Murthy
+    public function process()
+    {
+        //return view('pages/welcome');
+        # If there is data stored in the session as the results of doing a search
+        # that data will be extracted from the session and passed to the view
+        # to display the results
+        return view('parkings/create', [
+            'searchTerms' => session('searchTerms', null),
+            'searchType' => session('searchType', null),
+            'fromTime' => session('fromTime', null)
+        ]);
+    }
 }

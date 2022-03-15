@@ -19,14 +19,16 @@ use App\Http\Controllers\ListController;
 Route::get('/', [PageController::class, 'welcome']);
 Route::get('/contact', [PageController::class, 'contact']);
 
-Route::get('/parkings', [ParkController::class, 'index']);
-Route::get('/search', [ParkController::class, 'search']);
-
 # Make sure the create route comes before the `/parkings/{slug}` route so it takes precedence
 Route::get('/parkings/create', [ParkController::class, 'create']);
-
 # Note the use of the post method in this route
 Route::post('/parkings', [ParkController::class, 'store']);
+
+
+Route::get('/parkings', [ParkController::class, 'index']);
+Route::get('/process', [ParkController::class, 'process']);
+Route::get('/search', [ParkController::class, 'search']);
+
 
 //Route::get('/parkings/{vehicle}', [ParkController::class, 'show']);
 Route::get('/parkings/{slug}', [ParkController::class, 'show']);

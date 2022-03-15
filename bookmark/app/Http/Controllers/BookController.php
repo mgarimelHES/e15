@@ -43,6 +43,7 @@ class BookController extends Controller
         # Get the form input values (default to null if no values exist)
         $searchTerms = $request->input('searchTerms', null);
         $searchType = $request->input('searchType', null);
+       
 
         # Load our json book data and convert it to an array
         $bookData = file_get_contents(database_path('books.json'));
@@ -56,6 +57,11 @@ class BookController extends Controller
             }
         }
     
+        //test
+        $myVariable = 'THIS is IT';
+
+        //end test
+
         # Redirect back to the form with data/results stored in the session
         # Ref: https://laravel.com/docs/responses#redirecting-with-flashed-session-data
         return redirect('/')->with([

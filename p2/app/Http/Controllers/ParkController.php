@@ -13,7 +13,30 @@ class ParkController extends Controller
     */
     public function create(Request $request)
     {
-        return view('parkings/create');
+        
+        # Get the form input values (default to null if no values exist)
+        $parkingDay = $request->input('parkingDay', null);
+        $fromTime = $request->input('fromTime', null);
+        $toTime = $request->input('toTime', null);
+        $discountType = $request->input('discountType', null);
+        $plate = $request->input('plate', null);
+        $make = $request->input('make', null);
+        $model = $request->input('model', null);
+
+
+        $myVariable = $request->input('myVariable', null);
+        
+        // return view('parkings/create');
+        return view('parkings/create', [
+        'parkingDay' => session('parkingDay', null),
+        'fromTime' => session('fromTime', null),
+        'toTime' => session('toTime', null),
+        'discountType' => session('discountType', null),
+        'plate' => session('plate', null),
+        'make' => session('make', null),
+        'model' => session('model', null),
+        'myVariable' => session('myVariable', null)
+    ]);
     }
 
     /**
@@ -24,7 +47,159 @@ class ParkController extends Controller
     {
         # Code will eventually go here to add the parking receipt to the database,
         # but for now we'll just dump the form data to the page as a place holder!
+        
+        //dump($request);
+        
+        # If validation fails, it will go back to the same page!
+        $request->validate([
+            'parkingDay' => 'required',
+            'fromTime' => 'required',
+            'toTime' => 'required',
+            'discountType' => 'required',
+            'plate' => 'required',
+            'make' => 'required',
+            'model' => 'required',
+            'terms' => 'required'
+        ]);
+
+        # Get the form input values (default to null if no values exist)
+        $parkingDay = $request->input('parkingDay', null);
+        $fromTime = $request->input('fromTime', null);
+        $toTime = $request->input('toTime', null);
+        $discountType = $request->input('discountType', null);
+        $plate = $request->input('plate', null);
+        $make = $request->input('make', null);
+        $model = $request->input('model', null);
+
+        $myVariable = $request->input('myVariable', null);
         dump($request->all());
+        /*
+        dump($fromTime);
+        dump(gettype($fromTime));
+        dump(substr($fromTime, 0, 2)); //HH Hours
+         dump(substr($fromTime, 3)); //MM Minutes
+         dump($toTime);
+        dump($parkingDay);
+        */
+
+        # Hard coding the values for this example to 6am → 7:45am,
+        $from = \Carbon\Carbon::create(substr($parkingDay, 0, 4), substr($parkingDay, 5, 2), substr($parkingDay, 8, 2), substr($fromTime, 0, 2), substr($fromTime, 3), 00);
+        $to = \Carbon\Carbon::create(substr($parkingDay, 0, 4), substr($parkingDay, 5, 2), substr($parkingDay, 8, 2), substr($toTime, 0, 2), substr($toTime, 3), 00);
+
+        # Calculate the difference in minutes between the "from" and "to" time
+        $minutes = $from->diffInMinutes($to);
+
+        # From the minutes, calculate the hours, rounding up
+        $hours = ceil($minutes / 60);
+        $rate = 10;
+
+        //dump($hours); # Should yield 2
+        //
+        switch ($discountType) {
+            case "visitor":
+                echo "discount for visitor";
+                $rate = $rate * 1.0; // No discount
+                break;
+            case "student":
+                echo "discount for student";
+                $rate = $rate * 0.9; // 10% discount
+                break;
+            case "faculty":
+                echo "discount for faculty";
+                $rate = $rate * 0.8; // 20% discount
+                break;
+            case "staff":
+                echo "Discount for staff";
+                $rate = $rate * 0.7; // 30% discount
+                break;
+        }
+        #
+        // Calculate the total parking fee using the rounded hours with the discounted rate if applicable.
+        $price = $hours * $rate;
+
+        $myVariable = 'Vehcile may be parked on '. $parkingDay . '  for a total of $'. $price . ' for '. $hours . ' hours from '. $fromTime . ' to ' . $toTime . ' at a rate of $' . $rate . ' per hour';
+        //dump($myVariable);
+        // $myVariable = session('myVariable', null);
+        //dump($request->all());
+        
+        
+        return redirect('parkings/create')->with([
+            'parkingDay' => $parkingDay,
+            'fromTime' => $fromTime,
+            'toTime' => $toTime,
+            'discountType' => $discountType,
+            'plate' => $plate,
+            'make' => $make,
+            'model' => $model,
+            'myVariable' => $myVariable
+        ]);
+        
+        
+        //my testing ends
+
+        dump($request->all());
+    }
+
+    /**
+     * GET /process
+     * Process the parking receipt using the parking receipt form
+     */
+    public function process(Request $request)
+    {
+        dump($request);
+        
+        # If validation fails, it will go back to the same page!
+        $request->validate([
+            'parkingDay' => 'required',
+            'fromTime' => 'required',
+            'toTime' => 'required'
+        ]);
+        
+        // return 'Process the parking receipt form here!! ...';
+        //test
+        
+        # Get the form input values (default to null if no values exist)
+        $parkingDay = $request->input('parkingDay', null);
+        $fromTime = $request->input('fromTime', null);
+        $toTime = $request->input('toTime', null);
+        
+
+       
+
+        dump($fromTime);
+        dump(gettype($fromTime));
+        dump(substr($fromTime, 0, 2)); //HH Hours
+        dump(substr($fromTime, 3)); //MM Minutes
+        dump($toTime);
+        dump($parkingDay);
+
+        # Do search
+        //$myResults = ['a','b'];
+        
+
+        # Redirect back to the form with data/results stored in the session
+        # Ref: https://laravel.com/docs/responses#redirecting-with-flashed-session-data
+        
+        //return 'Under construction!';
+        /*
+        return redirect('parkings/create')->with([
+            'parkingDay' => $parkingDay,
+            'fromTime' => $fromTime,
+            'toTime' => $toTime,
+            'myVariable' => $myVariable
+        ]);
+
+        */
+        $myVariable = 'Test Only';
+        dump($myVariable);
+        $myVariable = session('myVariable', null);
+
+        return redirect('parkings/create')->with([
+            'myVariable' => $myVariable
+        ]);
+        
+        
+        //end testing
     }
 
     /**
