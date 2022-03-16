@@ -42,7 +42,7 @@
         <div class='myDiv'>
             {{ csrf_field() }}
             <fieldset>
-                <p>Open from <time>06:00</time> to <time>22:00</time> every weekday.</p>
+                <p>Open from <time>12:00 AM </time> to <time>11:59 PM</time> every weekday.</p>
 
                 <label for="parkingDay">Date:</label>
                 <input type="date" id="parkingDay" name="parkingDay" value='{{ old('parkingDay', $parkingDay) }}'>
@@ -54,10 +54,10 @@
                 <label for='input'>Parking Rates:</label>
                 <textarea readonly id='conditions' name='condiitons' rows='5' cols='80' wrap>
 
-                        *** Please aware of hourly rates, no paritial rates. ***
-                        *** Please note the hourly parking rate is $10.00 USD for visitors ***
-                        *** Discount: For Students, Staff and Faculty!!  ***
-                        </textarea>
+                *** Please aware of hourly rates, no paritial rates. ***
+                *** Please note the hourly parking rate is $10.00 USD for visitors ***
+                *** Discount: For Students, Staff and Faculty!!  ***
+                </textarea>
                 <label for='input'>Are you a visitor or current student, staff or faculty?</label>
                 <input type='radio' test='student-option' name='discountType' value='student' id='student'
                     {{ $discountType == 'student' ? 'checked' : '' }}>
@@ -87,14 +87,14 @@
                 <input type='checkbox' name='terms' id='terms' value='terms'>
 
                 <textarea readonly id='rules' name='rules' rows='7' cols='80' wrap>
-                                                                                                                              It is important that you should follow our parking lot rules in order to keep our parking lot safe and clean. We expect that you will respect our parking lot and treat it with the same care that you would any other space in our building. You shall not: litter, shall not speed and follow the parking lot limit of 5 miles/hr, shall respect others’ property and vehicles, shall not park overnight.
-                                                                                                                            Overnight parked vehciles will be towed at the owner's expense.
+                It is important that you should follow our parking lot rules in order to keep our parking lot safe and clean. We expect that you will respect our parking lot and treat it with the same care that you would any other space in our building. You shall not: litter, shall not speed and follow the parking lot limit of 5 miles/hr, shall respect others’ property and vehicles, shall not park overnight.
+                Overnight parked vehciles will be towed at the owner's expense.
 
-                                                                                                                             If there are any specific challenges in your surroundings, such as others walking their dog through the parking lot and leaving a mess, you may want to address those issues in the parking lot rules section as well
-                                                                                                                            You may also want to outline rules against certain types of parking, such as ‘diagonal parking,’ when someone parks diagonally in order to take up two spaces and reduce the chance of another vehicle parking beside their car
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
-                                                                                                                            If you have access control systems such as keypads or barrier gates, you may want to include any rules about their use in this section (e.g. ‘staff employees are not permitted to share access control codes with anyone outside the workplace’)
-                                                                                                                            </textarea>
+                If there are any specific challenges in your surroundings, such as others walking their dog through the parking lot and leaving a mess, you may want to address those issues in the parking lot rules section as well
+                You may also want to outline rules against certain types of parking, such as ‘diagonal parking,’ when someone parks diagonally in order to take up two spaces and reduce the chance of another vehicle parking beside their car
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+                If you have access control systems such as keypads or barrier gates, you may want to include any rules about their use in this section (e.g. ‘staff employees are not permitted to share access control codes with anyone outside the workplace’)
+                </textarea>
                 <p>---->Please place the parking receipt on your car dashboard <---- </p>
                         <label>Get Your Parking Receipt</label>
 
@@ -110,6 +110,10 @@
                 <li>{{ $error }}</li>
             @endforeach
         </ul>
+    @endif
+
+    @if ($fromTime > 10)
+        <div class='error'>{{ $errors->first('fromTime') }}</div>
     @endif
 
     @if (is_null($myVariable))

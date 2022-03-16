@@ -49,12 +49,14 @@ class ParkController extends Controller
         # but for now we'll just dump the form data to the page as a place holder!
         
         //dump($request);
-        
+        $timeNow = date('H:i');
+        $startHour = date("G", strtotime($request->input('fromTime', null)));
+        $endHour = date("G", strtotime($request->input('toTime', null)));
         # If validation fails, it will go back to the same page!
         $request->validate([
-            'parkingDay' => 'required',
-            'fromTime' => 'required',
-            'toTime' => 'required',
+            'parkingDay' => 'required|date_equals:'. date('m/d/Y'),
+            'fromTime' => 'required|date_format:H:i',
+            'toTime' => 'required|date_format:H:i|after:fromTime|before: 11:00 PM',
             'discountType' => 'required',
             'plate' => 'required',
             'make' => 'required',
@@ -117,7 +119,7 @@ class ParkController extends Controller
         // Calculate the total parking fee using the rounded hours with the discounted rate if applicable.
         $price = $hours * $rate;
 
-        $myVariable = 'Vehcile may be parked on '. $parkingDay . '  for a total of $'. $price . ' for '. $hours . ' hours from '. $fromTime . ' to ' . $toTime . ' at a rate of $' . $rate . ' per hour';
+        $myVariable = 'Vehcile may be parked on '. $parkingDay . '  for a total of $'. $price . ' for '. $hours . ' hours from '. $fromTime . ' to ' . $toTime . ' at a rate of $' . $rate . ' per hour'. $startHour .$endHour;
         //dump($myVariable);
         // $myVariable = session('myVariable', null);
         //dump($request->all());
