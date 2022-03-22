@@ -9,11 +9,12 @@ class ParkController extends Controller
 {
     /**
     * GET /parkings/create
-    * Display the form to add a new parking Receipt
+    * Display the form to add vehicle information to get a new parking Receipt
     */
     public function create(Request $request)
     {
-        
+        // return view('parkings/create');
+
         # Get the form input values (default to null if no values exist)
         $parkingDay = $request->input('parkingDay', null);
         $fromTime = $request->input('fromTime', null);
@@ -23,10 +24,10 @@ class ParkController extends Controller
         $make = $request->input('make', null);
         $model = $request->input('model', null);
 
-
-        $myVariable = $request->input('myVariable', null);
+        # The parking receipt with the current date and given time, will be displayed along with the calculated cost!
+        $parkingReceipt = $request->input('parkingReceipt', null);
         
-        // return view('parkings/create');
+        
         return view('parkings/create', [
         'parkingDay' => session('parkingDay', null),
         'fromTime' => session('fromTime', null),
@@ -35,24 +36,27 @@ class ParkController extends Controller
         'plate' => session('plate', null),
         'make' => session('make', null),
         'model' => session('model', null),
-        'myVariable' => session('myVariable', null)
+        'parkingReceipt' => session('parkingReceipt', null)
     ]);
     }
 
     /**
     * POST /parkings
-    * Process the form for adding a new parking request
+    * Process the form for creating a new parking receipt
     */
     public function store(Request $request)
     {
         # Code will eventually go here to add the parking receipt to the database,
-        # but for now we'll just dump the form data to the page as a place holder!
+        # but for now we'll just dump the form output data to the page as a place holder!!
         
         //dump($request);
+        # Calculate the starting and ending hours and compare with the current time in hours!
+
         $timeNow = date('H:i');
         $startHour = date("G", strtotime($request->input('fromTime', null)));
         $endHour = date("G", strtotime($request->input('toTime', null)));
-        # If validation fails, it will go back to the same page!
+
+        # If validation fails, it will go back to the same form page for the user to fix the errors!
         $request->validate([
             'parkingDay' => 'required|date_equals:'. date('m/d/Y'),
             'fromTime' => 'required|date_format:H:i',
@@ -73,30 +77,22 @@ class ParkController extends Controller
         $make = $request->input('make', null);
         $model = $request->input('model', null);
 
-        $myVariable = $request->input('myVariable', null);
-        dump($request->all());
-        /*
-        dump($fromTime);
-        dump(gettype($fromTime));
-        dump(substr($fromTime, 0, 2)); //HH Hours
-         dump(substr($fromTime, 3)); //MM Minutes
-         dump($toTime);
-        dump($parkingDay);
-        */
+        $parkingReceipt = $request->input('parkingReceipt', null);
+        //dump($request->all());
 
-        # Hard coding the values for this example to 6am → 7:45am,
+        # Using the Carbon, the parking start and end timmes are compared in terms of hours and minutes
         $from = \Carbon\Carbon::create(substr($parkingDay, 0, 4), substr($parkingDay, 5, 2), substr($parkingDay, 8, 2), substr($fromTime, 0, 2), substr($fromTime, 3), 00);
         $to = \Carbon\Carbon::create(substr($parkingDay, 0, 4), substr($parkingDay, 5, 2), substr($parkingDay, 8, 2), substr($toTime, 0, 2), substr($toTime, 3), 00);
 
-        # Calculate the difference in minutes between the "from" and "to" time
+        # Calculate the difference in minutes between the "from Time" and "to Time"
         $minutes = $from->diffInMinutes($to);
 
-        # From the minutes, calculate the hours, rounding up
+        # From the minutes, calculate the hours, rounding up to the nearest integer since the parking is calculated on hourly basis!
         $hours = ceil($minutes / 60);
         $rate = 10;
 
-        //dump($hours); # Should yield 2
-        //
+        # Calculate the discount based on the parking discount category - Student, Faculty, Staff and Visitor
+        # Discount is as follows - Visitor: 0%; Student : 10%; Faculty : 20% and Staff: 30%
         switch ($discountType) {
             case "visitor":
                 echo "discount for visitor";
@@ -119,12 +115,10 @@ class ParkController extends Controller
         // Calculate the total parking fee using the rounded hours with the discounted rate if applicable.
         $price = $hours * $rate;
 
-        $myVariable = 'Vehcile may be parked on '. $parkingDay . '  for a total of $'. $price . ' for '. $hours . ' hours from '. $fromTime . ' to ' . $toTime . ' at a rate of $' . $rate . ' per hour'. $startHour .$endHour;
-        //dump($myVariable);
-        // $myVariable = session('myVariable', null);
-        //dump($request->all());
+        $parkingReceipt = 'Vehicle may be parked on '. $parkingDay . '  for a total of $'. $price . ' for '. $hours . ' hours from '. $fromTime . ' to ' . $toTime . ' at a rate of $' . $rate . ' per hour';
+        //dump($parkingReceipt);
         
-        
+        # Redirect to the same form to display the parking receipt using the 'myVariable' for now along with the given input data
         return redirect('parkings/create')->with([
             'parkingDay' => $parkingDay,
             'fromTime' => $fromTime,
@@ -133,13 +127,12 @@ class ParkController extends Controller
             'plate' => $plate,
             'make' => $make,
             'model' => $model,
-            'myVariable' => $myVariable
+            'parkingReceipt' => $parkingReceipt
         ]);
         
-        
-        //my testing ends
 
-        dump($request->all());
+        // For debuggint purpose, dump could be used to view the complete request object
+        //dump($request->all());
     }
 
     /**
@@ -148,60 +141,81 @@ class ParkController extends Controller
      */
     public function process(Request $request)
     {
-        dump($request);
         
-        # If validation fails, it will go back to the same page!
+        # Validate the form and if everything looks good, process the parking receipt'
+
+        # If validation fails, it will go back to the same form page for the user to fix the errors!
         $request->validate([
-            'parkingDay' => 'required',
-            'fromTime' => 'required',
-            'toTime' => 'required'
+            'parkingDay' => 'required|date_equals:'. date('m/d/Y'),
+            'fromTime' => 'required|date_format:H:i',
+            'toTime' => 'required|date_format:H:i|after:fromTime|before: 11:00 PM',
+            'discountType' => 'required',
+            'plate' => 'required',
+            'make' => 'required',
+            'model' => 'required',
+            'terms' => 'required'
         ]);
-        
-        // return 'Process the parking receipt form here!! ...';
-        //test
-        
+
         # Get the form input values (default to null if no values exist)
         $parkingDay = $request->input('parkingDay', null);
         $fromTime = $request->input('fromTime', null);
         $toTime = $request->input('toTime', null);
+        $discountType = $request->input('discountType', null);
+        $plate = $request->input('plate', null);
+        $make = $request->input('make', null);
+        $model = $request->input('model', null);
+
+        $parkingReceipt = $request->input('parkingReceipt', null);
+
+        # Using the Carbon, the parking start and end timmes are compared in terms of hours and minutes
+        $from = \Carbon\Carbon::create(substr($parkingDay, 0, 4), substr($parkingDay, 5, 2), substr($parkingDay, 8, 2), substr($fromTime, 0, 2), substr($fromTime, 3), 00);
+        $to = \Carbon\Carbon::create(substr($parkingDay, 0, 4), substr($parkingDay, 5, 2), substr($parkingDay, 8, 2), substr($toTime, 0, 2), substr($toTime, 3), 00);
+
+        # Calculate the difference in minutes between the "from Time" and "to Time"
+        $minutes = $from->diffInMinutes($to);
+
+        # From the minutes, calculate the hours, rounding up to the nearest integer since the parking is calculated on hourly basis!
+        $hours = ceil($minutes / 60);
+        $rate = 10;
+
+        # Calculate the discount based on the parking discount category - Student, Faculty, Staff and Visitor
+        # Discount is as follows - Visitor: 0%; Student : 10%; Faculty : 20% and Staff: 30%
+        switch ($discountType) {
+            case "visitor":
+                echo "discount for visitor";
+                $rate = $rate * 1.0; // No discount
+                break;
+            case "student":
+                echo "discount for student";
+                $rate = $rate * 0.9; // 10% discount
+                break;
+            case "faculty":
+                echo "discount for faculty";
+                $rate = $rate * 0.8; // 20% discount
+                break;
+            case "staff":
+                echo "Discount for staff";
+                $rate = $rate * 0.7; // 30% discount
+                break;
+        }
+        #
+        # Calculate the total parking fee using the rounded hours with the discounted rate if applicable.
+        $price = $hours * $rate;
+
+        # Create a parking receipt using the given information and any applicable discount.
+        $parkingReceipt = 'Vehicle may be parked on '. $parkingDay . '  for a total of $'. $price . ' for '. $hours . ' hours from '. $fromTime . ' to ' . $toTime . ' at a rate of $' . $rate . ' per hour';
         
-
-       
-
-        dump($fromTime);
-        dump(gettype($fromTime));
-        dump(substr($fromTime, 0, 2)); //HH Hours
-        dump(substr($fromTime, 3)); //MM Minutes
-        dump($toTime);
-        dump($parkingDay);
-
-        # Do search
-        //$myResults = ['a','b'];
-        
-
-        # Redirect back to the form with data/results stored in the session
-        # Ref: https://laravel.com/docs/responses#redirecting-with-flashed-session-data
-        
-        //return 'Under construction!';
-        /*
+        # Redirect to the same form to display the parking receipt using the 'myVariable' for now along with the given input data
         return redirect('parkings/create')->with([
             'parkingDay' => $parkingDay,
             'fromTime' => $fromTime,
             'toTime' => $toTime,
-            'myVariable' => $myVariable
+            'discountType' => $discountType,
+            'plate' => $plate,
+            'make' => $make,
+            'model' => $model,
+            'parkingReceipt' => $parkingReceipt
         ]);
-
-        */
-        $myVariable = 'Test Only';
-        dump($myVariable);
-        $myVariable = session('myVariable', null);
-
-        return redirect('parkings/create')->with([
-            'myVariable' => $myVariable
-        ]);
-        
-        
-        //end testing
     }
 
     /**

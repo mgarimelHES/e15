@@ -35,7 +35,7 @@ Route::get('/parkings/{slug}', [ParkController::class, 'show']);
 Route::get('/parkings/filter/{category}/{subcategory}', [ParkController::class, 'filter']);
 
 Route::get('/parking/{id}', function ($id) {
-    return 'Your parking information vehicle #'.$id;
+    return 'Your parking information vehicle license plate#'.$id;
 });
 
 
