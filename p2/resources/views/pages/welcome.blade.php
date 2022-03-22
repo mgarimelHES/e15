@@ -6,7 +6,7 @@
 
 @section('content')
     <p>
-        Welcome to YourParking&mdash; an online parking lot journal that lets you track and share a history of parkings with
+        Welcome to YourParking&mdash; an online parking lot that lets you track and share a history of parkings with
         us.
     </p>
 

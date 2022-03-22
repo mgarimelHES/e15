@@ -5,13 +5,13 @@
 @endsection
 
 @section('content')
-    <h1>Create a parking ticket</h1>
+    <h1>Create a Parking Ticket</h1>
 
     <p>Want to create a parking ticket for your vehicle? Not a problem- follow the procedure below
     </p>
 
-    {{-- <form method='POST' action='/parkings'> --}}
-    <form method='GET' action='/process'>
+    <form method='POST' action='/parkings'>
+
         <div class='myDiv'>
             {{ csrf_field() }}
             <fieldset>
@@ -29,7 +29,7 @@
                 <ul>
                     <li>*** Please aware of hourly rates, no paritial rates. ***</li>
                     <li>*** Please note the hourly parking rate is $10.00 USD for visitors ***</li>
-                    <li>*** Discount: For Students, Staff and Faculty!! ***</li>
+                    <li>*** Discount: For Students, Staff and Faculty only!! ***</li>
                 </ul>
 
                 <label for='input'>Are you a visitor or current student, staff or faculty?</label>
@@ -45,14 +45,15 @@
                 <input type='radio' test='visitor-option' name='discountType' id='visitor' value='visitor'
                     {{ old('discountType', 'visitor') == 'visitor' ? 'checked' : '' }}>
                 <label for='visitor'>Visitor</label>
-                <label>Vehicle Information</label>
 
+                <label>Vehicle Information</label>
 
                 <label for='input'>License Plate:</label>
                 <input type='text' name='plate' id='plate' value='{{ old('plate', $plate) }}'>
 
                 <label for='input'>Vehicle Make:</label>
                 <input type='text' name='make' id='make' value='{{ old('make', $make) }}'>
+
                 <label for='input'>Vehicle Model:</label>
                 <input type='text' name='model' id='model' value='{{ old('model', $model) }}'>
 
@@ -72,25 +73,20 @@
                     If you have access control systems such as keypads or barrier gates, you may want to include any rules about their use in this section (e.g. ‘staff employees are not permitted to share access control codes with anyone outside the workplace’)
                     </textarea>
 
-                <label>Get Your Parking Receipt</label>
-
-
                 <button type='submit' class='btn btn-primary'>Get a Parking Receipt</button>
+
                 <p>---->Please place the parking receipt on your car dashboard <---- </p>
 
             </fieldset>
         </div>
     </form>
+
     @if (count($errors) > 0)
         <ul class='alert alert-danger'>
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach
         </ul>
-    @endif
-
-    @if ($fromTime > 10)
-        <div class='error'>{{ $errors->first('fromTime') }}</div>
     @endif
 
     @if (!is_null($parkingReceipt))
