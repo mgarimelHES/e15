@@ -38,6 +38,7 @@ class BookController extends Controller
             'searchType' => 'required'
         ]);
 
+
         # If validation fails, it will redirect back to `/`
 
         # Get the form input values (default to null if no values exist)
