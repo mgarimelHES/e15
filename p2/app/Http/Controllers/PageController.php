@@ -9,7 +9,6 @@ class PageController extends Controller
 {
     public function welcome()
     {
-        //return view('pages/welcome');
         #
         # If there is data stored in the session as the results of doing a search
         # that data will be extracted from the session and passed to the view
@@ -24,8 +23,7 @@ class PageController extends Controller
 
     public function contact()
     {
-        //return '<h1>Contact us at mail@yourparking.com</h1>';
-        #
+        # Return the view to display the contact information
         return view('pages/contact');
     }
 }

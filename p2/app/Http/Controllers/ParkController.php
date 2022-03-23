@@ -13,9 +13,9 @@ class ParkController extends Controller
     */
     public function create(Request $request)
     {
-        // return view('parkings/create');
-
-        # Get the form input values (default to null if no values exist)
+        #
+        # Get the form input field values (default to null if no values exist)
+        #
         $parkingDay = $request->input('parkingDay', null);
         $fromTime = $request->input('fromTime', null);
         $toTime = $request->input('toTime', null);
@@ -27,7 +27,7 @@ class ParkController extends Controller
         # The parking receipt with the current date and given time, will be displayed along with the calculated cost!
         $parkingReceipt = $request->input('parkingReceipt', null);
         
-        # Display the Parking receipt form for user to enter the values
+        # Display the Parking receipt form for user to enter the values for vehicle and date & time information
         return view('parkings/create', [
         'parkingDay' => session('parkingDay', null),
         'fromTime' => session('fromTime', null),
@@ -46,6 +46,7 @@ class ParkController extends Controller
     */
     public function store(Request $request)
     {
+        #
         # Code will eventually go here to add the parking receipt to the database,
         # but for now we'll just dump the form output data to the page as a place holder!!
         #
@@ -70,9 +71,9 @@ class ParkController extends Controller
         $plate = $request->input('plate', null);
         $make = $request->input('make', null);
         $model = $request->input('model', null);
-
+        #
         $parkingReceipt = $request->input('parkingReceipt', null);
-        
+        #
         # Calculate the starting and ending hours and to process the parking duration to the nearest hour!
         #
         # Using the Carbon, the parking start and end timmes are compared in terms of hours and minutes
@@ -110,7 +111,9 @@ class ParkController extends Controller
         #
         # Calculate the total parking fee using the rounded hours with the discounted rate if applicable.
         $price = $hours * $rate;
-
+        #
+        # Create a custom parking receip using the given information and applicable discount if any!
+        #
         $parkingReceipt = 'Vehicle may be parked on '. $parkingDay . '  for a total of $'. $price . ' for '. $hours . ' hours from '. $fromTime . ' to ' . $toTime . ' at a rate of $' . $rate . ' per hour';
         
         # Redirect to the same form to display the parking receipt using the results with 'parkingReceipt' along with the given input data
@@ -128,18 +131,18 @@ class ParkController extends Controller
     }
     /**
      * GET /process
-     * Process the parking receipt using the parking receipt for future printing logic
+     * Process the parking receipt using the parking receipt for future printing logic later phase
      */
     public function process(Request $request)
     {
         
-        // Place holder for future process
+        # Place holder for future process
         return 'Place Holder for future process';
     }
 
     /**
      * GET /search
-     * Search the parkings based on license plate or id
+     * Search the parkings based on license plate(ex- Mur-005) or lot (ex- Lot-East or Lot-West)
      */
     public function search(Request $request)
     {
