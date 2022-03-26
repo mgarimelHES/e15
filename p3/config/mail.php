@@ -2,9 +2,6 @@
 
 return [
 
-    // test email
-    'contact_email' => 'mgarimelHES@g.edu',
-    //test end
     /*
     |--------------------------------------------------------------------------
     | Default Mailer
@@ -45,7 +42,6 @@ return [
             'username' => env('MAIL_USERNAME'),
             'password' => env('MAIL_PASSWORD'),
             'timeout' => null,
-            'auth_mode' => null,
         ],
 
         'ses' => [
