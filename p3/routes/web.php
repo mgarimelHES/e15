@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ParkController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ListController;
+use App\Http\Controllers\PracticeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,9 @@ use App\Http\Controllers\ListController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+# Pratice related HERE
+
+Route::any('/practice/{n?}', [PracticeController::class, 'index']);
 
 Route::get('/', [PageController::class, 'welcome']);
 Route::get('/contact', [PageController::class, 'contact']);

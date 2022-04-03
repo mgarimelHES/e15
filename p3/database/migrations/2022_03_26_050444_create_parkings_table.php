@@ -19,10 +19,10 @@ return new class extends Migration {
             $table->string('parking_lot');
             $table->string('license_plate');
             $table->string('owner');
-            $table->tinyInteger('model_year');
+            $table->smallInteger('model_year');
             #  $table->string('vehicle_image')->nullable(); # Here we use a column modifier to specify this column can be left empty (null)
             $table->dateTime('parking_start_time');
-            $table->date('parking_end_time');
+            $table->dateTime('parking_end_time');
             $table->string('vehicle_image')->nullable();
             $table->string('make');
             $table->string('model');

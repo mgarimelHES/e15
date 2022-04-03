@@ -9,6 +9,74 @@ use App\Models\Book;
 class PracticeController extends Controller
 {
     /**
+    * Tenth practice example as per week9 assignment
+    * GET /practice/10
+    */
+    public function practice10()
+    {
+        dump('This is the tenth example.');
+        //dump(DB::select('SHOW DATABASES;'));
+        //$book = Book::where('author', '=', 'Dr. Seuss')->get();
+        //$book->delete();
+        //dump('Book deleted.');
+        //$books = Book::where('author', 'LIKE', '%Weir%')->get();
+        //foreach ($books as $book) {
+        //   dump($book->title);
+        //}
+        $book = Book::where('author', 'LIKE', '%Weir%')->first();
+        dump($book->author);
+        dump('Done');
+    }
+    
+    
+    /**
+        * Ninth practice example
+        * GET /practice/9
+        */
+    public function practice9()
+    {
+        # Get all rows
+        //$result = Book::all();
+        //dump($result->toArray());
+        # 1. Retrieve the last 2 books that were added to the books table.
+        //$result = Book::where('published_year', '>', 2020)->limit(2)->get();
+        //dump($result->toArray());
+        # 2. Retrieve all the books published after 1950.
+        //$result = Book::where('published_year', '>', 1950)->get();
+        //dump($result->toArray());
+        # 3. Retrieve all the books in alphabetical order by title.
+        //$result = Book::orderBy('title', 'asc')->get();
+        //dump($result->toArray());
+        # 4. Retrieve all the books in descending order according to published year.
+        //$result = Book::orderBy('published_year', 'desc')->get();
+        //dump($result->toArray());
+        # 5. Find any books by the author “J.K. Rowling” and update the author name to be “JK Rowling”
+        /*
+         $books = Book::where('author', '=', 'J.K. Rowling')->get();
+
+         if (!$books) {
+             dump("Book not found, can not update.");
+         } else {
+             # Change some properties (1 props) using for each loop
+             foreach ($books as $book) {
+                 $book->author = 'JK Rowling';
+
+                 # Save the changes
+                 $book->save();
+             }
+             dump('Update complete');
+         }
+         */
+        # Remove any/all books with an author name that includes the string “Rowling”
+        //$books = Book::where('author', 'LIKE', '%Rowling%')->get();
+        //dump($books->toArray());
+        #6. Delete any rows matching a `where` constraint
+        $result = Book::where('author', 'LIKE', '%Rowling%')->delete();
+        dump($result);
+    }
+    
+
+    /**
         * Eighth practice example
         * GET /practice/8
         */
