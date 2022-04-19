@@ -15,14 +15,15 @@ return new class extends Migration {
         Schema::create('parkings', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            
             $table->string('slug');
             $table->string('parking_lot');
             $table->string('license_plate');
             $table->string('owner');
             $table->smallInteger('model_year');
             #  $table->string('vehicle_image')->nullable(); # Here we use a column modifier to specify this column can be left empty (null)
-            $table->dateTime('parking_start_time');
-            $table->dateTime('parking_end_time');
+            $table->time('parking_start_time');
+            $table->time('parking_end_time');
             $table->string('vehicle_image')->nullable();
             $table->string('make');
             $table->string('model');

@@ -5,9 +5,61 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Parking;
+use App\Models\Review;
+
+use Str;
+use Illuminate\Support\Facades\Auth;
 
 class PracticeController extends Controller
 {
+    /**
+        * 11h practice example - check user info
+        * GET /practice/11
+        */
+    public function practice11(Request $request)
+    {
+        # Retrieve the currently authenticated user via the Auth facade
+        $user = Auth::user();
+        dump($user->toArray());
+
+        # Retrieve the currently authenticated user via request object
+        $user = $request->user();
+        dump($user->toArray());
+
+        # Check if the user is logged in
+        if (Auth::check()) {
+            dump('The user ID is '.Auth::id());
+        }
+    }
+    
+    /**
+         * Tenth practice example - Review for reviews table
+         * GET /practice/10
+         */
+    public function practice10()
+    {
+        # Instantiate a new Review Model object
+        $review = new Review();
+        
+        # Set the properties
+        # Note how each property corresponds to a column in the table-reviews
+        $review->slug = 'parkingReview-1';
+        $review->first_name = 'John';
+        $review->last_name = 'Doe';
+        $review->parking_lot = 'Lot-West';
+        $review->rating = 4;
+        $review->recommended = false;
+        $review->content = 'The Martian is a 2011 science fiction novel written by Andy Weir. It was his debut novel under his own name. It was originally self-published in 2011; Crown Publishing purchased the rights and re-released it in 2014. The story follows an American astronaut, Mark Watney, as he becomes stranded alone on Mars in the year 2035 and must improvise in order to survive.';
+        
+        # Invoke the Eloquent `save` method to generate a new row in the
+        # `reviews` table, with the above data
+        $review->save();
+        
+        # Confirm results
+        dump('Added: ' . $review->parking_lot);
+        dump(Review::all()->toArray());
+    }
+    
     /**
         * Ninth practice example
         * GET /practice/9
@@ -15,8 +67,13 @@ class PracticeController extends Controller
     public function practice9()
     {
         # Get all rows
-        $result = Parking::all();
-        dump($result->toArray());
+        // $result = Parking::all();
+        //  dump($result->toArray());
+        //
+        //dump reviews all
+        $reviews = Review::all();
+        dump($reviews->toArray());
+        //
         # 1. Retrieve the last 2 parkings that were added to the parkings table.
         //$result = Parking::where('model_year', '>', 2010)->limit(2)->get();
         //dump($result->toArray());

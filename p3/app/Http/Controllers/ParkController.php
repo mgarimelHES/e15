@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
+use App\Models\Parking;
+
 class ParkController extends Controller
 {
     /**
@@ -13,6 +15,7 @@ class ParkController extends Controller
     */
     public function create(Request $request)
     {
+        /*
         #
         # Get the form input field values (default to null if no values exist)
         #
@@ -26,7 +29,7 @@ class ParkController extends Controller
 
         # The parking receipt with the current date and given time, will be displayed along with the calculated cost!
         $parkingReceipt = $request->input('parkingReceipt', null);
-        
+
         # Display the Parking receipt form for user to enter the values for vehicle and date & time information
         return view('parkings/create', [
         'parkingDay' => session('parkingDay', null),
@@ -38,6 +41,9 @@ class ParkController extends Controller
         'model' => session('model', null),
         'parkingReceipt' => session('parkingReceipt', null)
     ]);
+    */
+        # Project-3 Create page rendering Here
+        return view('parkings/create');
     }
 
     /**
@@ -53,15 +59,41 @@ class ParkController extends Controller
         #
         # If validation fails, it will go back to the same form page for the user to fix the errors!
         $request->validate([
+            'slug' => 'required|unique:parkings,slug',
             'parkingDay' => 'required|date_equals:'. date('m/d/Y'),
             'fromTime' => 'required|date_format:H:i',
             'toTime' => 'required|date_format:H:i|after:fromTime|before: 11:59 PM',
             'discountType' => 'required',
+            'parkingLot' => 'required',
             'plate' => 'required',
             'make' => 'required',
             'model' => 'required',
             'terms' => 'required'
         ]);
+        # dump
+
+        $parking = new Parking();
+        $parking->slug = $request->slug;
+        $parking->parking_lot = $request->parkingLot;
+        $parking->license_plate = $request->plate;
+        //$parking->owner = $request->owner;
+        $parking->owner = 'TEST';
+        $parking->model_year = $request->modelYear;
+        //$parking->parkingDay = $request->parkingDay;
+        $parking->parking_start_time = $request->fromTime;
+        $parking->parking_end_time = $request->toTime;
+        //$parking->vehicle_image = '/images/WV_ABC-999.jpg';
+        $parking->make = $request->make;
+        $parking->model = $request->model;
+        $parking->description = $request->rules;
+
+        $parking->save();
+
+        //dd($parking);
+        #Redirect later to REVIEW Parking Lot Page
+        return redirect('/parkings/create')->with(['flash-alert' => 'Your Parking Ticket has been created']);
+
+        /* process Parking receipt process below, will be removed later on for CLEAN-UP
         #
         # Get the form input values (default to null if no values exist)
         $parkingDay = $request->input('parkingDay', null);
@@ -115,7 +147,7 @@ class ParkController extends Controller
         # Create a custom parking receip using the given information and applicable discount if any!
         #
         $parkingReceipt = 'Vehicle may be parked on '. $parkingDay . '  for a total of $'. $price . ' for '. $hours . ' hours from '. $fromTime . ' to ' . $toTime . ' at a rate of $' . $rate . ' per hour';
-        
+
         # Redirect to the same form to display the parking receipt using the results with 'parkingReceipt' along with the given input data
         #
         return redirect('parkings/create')->with([
@@ -128,6 +160,7 @@ class ParkController extends Controller
             'model' => $model,
             'parkingReceipt' => $parkingReceipt
         ]);
+        */
     }
     /**
      * GET /process
@@ -184,20 +217,33 @@ class ParkController extends Controller
      */
     public function index()
     {
+        /*  Using Database instead of Json file
         # Load parking data using PHP’s file_get_contents
         # We specify the parkings.json file path using Laravel’s database_path helper
         $parkingData = file_get_contents(database_path('parkings.json'));
-        
+
         # Convert the string of JSON text loaded from parkings.json into an
         # array using PHP’s built-in json_decode function
         $parkings = json_decode($parkingData, true);
-        
+
         # Alphabetize the parkingss by license plates using Laravel’s Arr::sort
         $parkingss = Arr::sort($parkings, function ($value) {
             return $value['lot'];
         });
 
         return view('parkings/index', ['parkings' => $parkings]);
+        */
+        # Use database
+        $parkings = Parking::orderBy('license_plate', 'ASC')->get();
+
+        //$newParkingss = Parking::orderBy('id', 'DESC')->limit(3)->get();
+        
+        $newParkings = $parkings->sortByDesc('id')->take(3);
+
+        return view('parkings/index', [
+            'parkings' => $parkings,
+            'newParkings' => $newParkings
+        ]);
     }
 
     /**
@@ -206,17 +252,25 @@ class ParkController extends Controller
      */
     public function show($slug)
     {
+        /* Commented out to use database instead of a Json file
         # Load book data
         # @TODO: This code is redundant with loading the parkingss in the index method
-        
+
         $parkingData = file_get_contents(database_path('parkings.json'));
         $parkings = json_decode($parkingData, true);
 
-    
+
         # Narrow down array of parkings to the single parking we’re loading
         $parking = Arr::first($parkings, function ($value, $key) use ($slug) {
             return $key == $slug;
         });
+
+        return view('parkings/show', [
+            'parking' => $parking,
+        ]);
+        */
+        # Use database
+        $parking = Parking::where('slug', '=', $slug)->first();
 
         return view('parkings/show', [
             'parking' => $parking,
@@ -229,5 +283,91 @@ class ParkController extends Controller
     public function filter($category, $subcategory)
     {
         return 'Show all parkings in these categories: ' . $category . ' , ' . $subcategory;
+    }
+
+    
+    /**
+     * EDIT /parkings/slug for a specific parking ticket to add more time
+     */
+    public function edit(Request $request, $slug)
+    {
+        $parking = Parking::where('slug', '=', $slug)->first();
+        if (!$parking) {
+            return redirect('/parkings')->with(['flash-alert' => 'Parking Ticket not found.' ]);
+        }
+
+        return view('parkings/edit', ['parking' =>$parking]);
+    }
+
+    /**
+    * PUT /parkings/{slug}/edit
+    * Update the form to update the parking ticket
+    */
+    public function update(Request $request, $slug)
+    {
+        $parking = Parking::where('slug', '=', $slug)->first();
+       
+        # If validation fails, it will go back to the same form page for the user to fix the errors!
+        $request->validate([
+        'slug' => 'required|unique:parkings,slug',
+        'parkingDay' => 'required|date_equals:'. date('m/d/Y'),
+        'fromTime' => 'required|date_format:H:i',
+        'toTime' => 'required|date_format:H:i|after:fromTime|before: 11:59 PM',
+        'discountType' => 'required',
+        'parkingLot' => 'required',
+        'plate' => 'required',
+        'make' => 'required',
+        'model' => 'required',
+        'terms' => 'required'
+    ]);
+        # dump
+
+        $parking = new Parking();
+        $parking->slug = $request->slug;
+        $parking->parking_lot = $request->parkingLot;
+        $parking->license_plate = $request->plate;
+        //$parking->owner = $request->owner;
+        $parking->owner = 'TEST';
+        $parking->model_year = $request->modelYear;
+        //$parking->parkingDay = $request->parkingDay;
+        $parking->parking_start_time = ($request->fromTime)->format('H:i');
+        $parking->parking_end_time = $request->toTime;
+        //$parking->vehicle_image = '/images/WV_ABC-999.jpg';
+        $parking->make = $request->make;
+        $parking->model = $request->model;
+        $parking->description = $request->rules;
+
+        $parking->save();
+
+        //dd($parking);
+        
+        return redirect('/parkings/'.$slug.'/edit')->with(['flash-alert' => 'Your parking  has been updated.']);
+    }
+
+    /**
+    * GET /books/{slug}/delete
+    * Display the confirm page to delete a specific book using slug
+    */
+    public function delete($slug)
+    {
+        $parking = Parking::findBySlug($slug);
+        
+        if (!$parking) {
+            return redirect('/parkings')->with(['flash-alert' => 'Parking is not found.' ]);
+        }
+
+        return view('parkings/delete', ['parking' =>$parking]);
+    }
+
+    /**
+    * Delete a spefic parking
+    * DELETE /parkings/{slug}/delete
+    */
+    public function destroy($slug)
+    {
+        $parking = Parking::findBySlug($slug);
+        $parking->delete();
+
+        return redirect('/parkings')->with(['flash-alert' => '"'. $parking->plate . '" was deleted.' ]);
     }
 }

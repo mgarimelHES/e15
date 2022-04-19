@@ -9,6 +9,8 @@ use Illuminate\Support\Str;
 use App\Models\Parking; # Make sure Parking Model is accessible
 use Faker\Factory; # We’ll use this library to generate random/fake data
 
+use Carbon\Carbon;
+
 class ParkingsTableSeeder extends Seeder
 {
     private $faker;
@@ -91,7 +93,7 @@ class ParkingsTableSeeder extends Seeder
      */
     private function addRandomlyGeneratedParkingsUsingFaker()
     {
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             $parking = new Parking();
             
             $license = $this->faker->words(rand(3, 6), true);
@@ -108,10 +110,10 @@ class ParkingsTableSeeder extends Seeder
             //$parking->model = 'Civic';
             $parking->make = $this->faker->word;
             $parking->model = $this->faker->word;
-            $parking->parking_start_time = $this->faker->dateTimeThisMonth();
+            //$parking->parking_start_time = $this->faker->dateTimeThisMonth(); //changed from datetimestamp
+            $parking->parking_start_time = Carbon::now()->format('H:i:m'); //current time
             $parking->parking_end_time = $parking->parking_start_time;
             $parking->description = $this->faker->paragraphs(1, true);
-
             $parking->save();
         }
     }

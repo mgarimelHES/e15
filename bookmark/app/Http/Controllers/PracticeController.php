@@ -5,9 +5,32 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Book;
+use Str;
+
+use Illuminate\Support\Facades\Auth;
 
 class PracticeController extends Controller
 {
+    /**
+    * Tenth practice example as per week11 assignment
+    * GET /practice/11
+    */
+    public function practice11(Request $request)
+    {
+        # Retrieve the currently authenticated user via the Auth facade
+        $user = Auth::user();
+        dump($user->toArray());
+
+        # Retrieve the currently authenticated user via request object
+        //$user = $request->user();
+        // dump($user->toArray());
+
+        # Check if the user is logged in
+        if (Auth::check()) {
+            dump('The user ID is '.Auth::id());
+        }
+    }
+    
     /**
     * Tenth practice example as per week9 assignment
     * GET /practice/10
@@ -23,7 +46,7 @@ class PracticeController extends Controller
         //foreach ($books as $book) {
         //   dump($book->title);
         //}
-        $book = Book::where('author', 'LIKE', '%Weir%')->first();
+        $book = Book::where('author', 'LIKE', '%Rowling%')->first();
         dump($book->author);
         dump('Done');
     }
@@ -71,8 +94,18 @@ class PracticeController extends Controller
         //$books = Book::where('author', 'LIKE', '%Rowling%')->get();
         //dump($books->toArray());
         #6. Delete any rows matching a `where` constraint
-        $result = Book::where('author', 'LIKE', '%Rowling%')->delete();
-        dump($result);
+        // $result = Book::where('author', 'LIKE', '%Rowling%')->delete();
+        // dump($result);
+        //TEST WEEK 10 assignment
+        //$books = Book::orderBy('id', 'desc')->get();
+        //$book = $books->first();
+        //dump($book);
+        $books = Book::get();
+        dump($books);
+        $books2 = Book::all();
+        echo $books2;
+
+        //END Week10
     }
     
 

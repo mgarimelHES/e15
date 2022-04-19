@@ -1,0 +1,34 @@
+{
+    "parkingReview-1": {
+        "parking_lot": "Lot-East",
+        "first_name": "Jane",
+        "last_name": "Doe",
+        "rating": 1,
+        "recommended": true,
+        "content": "The Parking is at owner's discretion, since it is not a covered and secured lot in the evenings"
+    },
+    "parkingReview-2": {
+        "parking_lot": "Lot-East",
+        "first_name": "John",
+        "last_name": "Doe",
+        "rating": 2,
+        "recommended": false,
+        "content": "The Parking is at owner's discretion, since it is not a covered and secured lot in the evenings"
+    },
+    "parkingReview-3": {
+        "parking_lot": "Lot-East",
+        "first_name": "John",
+        "last_name": "Smith",
+        "rating": 4,
+        "recommended": false,
+        "content": "The Parking is good for the money and location"
+    },
+    "parkingReview-4": {
+        "parking_lot": "Lot-North",
+        "first_name": "Mary",
+        "last_name": "Jones",
+        "rating": 3,
+        "recommended": false,
+        "content": "The Parking is good for the money and location, but it is bit expensive."
+    }
+}

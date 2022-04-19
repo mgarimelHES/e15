@@ -158,6 +158,9 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'slug' => 'Parking Space',
+        'owner_id' => 'Owner'
+    ],
 
 ];

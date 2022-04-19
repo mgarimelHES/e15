@@ -175,6 +175,13 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        
+            # Existing providers above
+        
+            # NEW:
+            App\Providers\FortifyServiceProvider::class
+        
+
     ],
 
     /*

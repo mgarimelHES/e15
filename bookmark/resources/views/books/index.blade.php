@@ -11,14 +11,25 @@
 @section('content')
     <h1>All Books</h1>
 
+    @if (count($books) != 0)
+        <div id='newBooks'>
+            <h2>New Books</h2>
+            <ul class='clean-list'>
+                @foreach ($newBooks as $book)
+                    <li><a href='/books/{{ $book->slug }}'>{{ $book->title }}</a></li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     @if (count($books) == 0)
         <p>No books have been added yet...</p>
     @else
         <div id='books'>
-            @foreach ($books as $slug => $book)
-                <a class='book' href='/books/{{ $slug }}'>
-                    <h3>{{ $book['title'] }}</h3>
-                    <img class='cover' src='{{ $book['cover_url'] }}'>
+            @foreach ($books as $book)
+                <a class='book' href='/books/{{ $book->slug }}'>
+                    <h3>{{ $book->title }}</h3>
+                    <img class='cover' src='{{ $book->cover_url }}'>
                 </a>
             @endforeach
         </div>

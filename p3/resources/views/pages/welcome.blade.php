@@ -5,6 +5,13 @@
 @endsection
 
 @section('content')
+
+@if(Auth::user())
+<h2>
+    Hello {{ Auth::user()->name }}!
+</h2>
+@endif
+
     <p>
         Welcome to YourParking&mdash; an online parking lot that lets you track and share a history of parkings with
         us.

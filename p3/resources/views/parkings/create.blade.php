@@ -5,6 +5,12 @@
 @endsection
 
 @section('content')
+
+    @if (session('flash-alert'))
+        <div class='flash-alert'>
+            {{ session('flash-alert') }}
+    @endif
+
     <h1>Create a Parking Ticket</h1>
 
     <p>Want to create a parking ticket for your vehicle? Not a problem- follow the procedure below
@@ -17,13 +23,26 @@
             <fieldset>
                 <p>Open from <time>12:00 AM </time> to <time>11:59 PM</time> every weekday.</p>
 
+                <label for='parkingLot'>* Parking Lot</label>
+                <input type='text' name='parkingLot' id='parkingLot' value='{{ old('parkingLot') }}'>
+                @include('includes/error-field', ['fieldName' => 'parkingLot'])
+
+                <label for='slug'>* Parking Spot</label>
+                <input type='text' name='slug' id='slug' value='{{ old('slug') }}'>
+                @include('includes/error-field', ['fieldName' => 'slug'])
+
                 <label for="parkingDay">Date:</label>
-                <input type="date" id="parkingDay" name="parkingDay" value='{{ old('parkingDay', $parkingDay) }}'>
+                <input type="date" id="parkingDay" name="parkingDay" value='{{ old('parkingDay') }}'>
+                @include('includes/error-field', ['fieldName' => 'parkingDay'])
+
                 <label for="appt">Parking from time:</label>
-                <input type="time" id="fromTime" name="fromTime" min="08.00" max="18.00"
-                    value='{{ old('fromTime', $fromTime) }}'>
+                <input type="time" id="fromTime" name="fromTime" min="08.00" max="18.00" value='{{ old('fromTime') }}'>
+                @include('includes/error-field', ['fieldName' => 'fromTime'])
+
                 <label for="appt">Parking to time:</label>
-                <input type="time" id="toTime" name="toTime" min="08.00" max="18.00" value='{{ old('toTime', $toTime) }}'>
+                <input type="time" id="toTime" name="toTime" min="08.00" max="18.00" value='{{ old('toTime') }}'>
+                @include('includes/error-field', ['fieldName' => 'toTime'])
+
                 <label for='input'>Parking Rates:</label>
 
                 <ul>
@@ -49,15 +68,20 @@
                 <label>Vehicle Information</label>
 
                 <label for='input'>License Plate:</label>
-                <input type='text' name='plate' id='plate' value='{{ old('plate', $plate) }}'>
+                <input type='text' name='plate' id='plate' value='{{ old('plate') }}'>
+                @include('includes/error-field', ['fieldName' => 'plate'])
 
                 <label for='input'>Vehicle Make:</label>
-                <input type='text' name='make' id='make' value='{{ old('make', $make) }}'>
+                <input type='text' name='make' id='make' value='{{ old('make') }}'>
+                @include('includes/error-field', ['fieldName' => 'make'])
 
                 <label for='input'>Vehicle Model:</label>
-                <input type='text' name='model' id='model' value='{{ old('model', $model) }}'>
+                <input type='text' name='model' id='model' value='{{ old('model') }}'>
+                @include('includes/error-field', ['fieldName' => 'model'])
 
-
+                <label for='input'>Vehicle Year: (YYYY)</label>
+                <input type='text' name='modelYear' id='modelYear' value='{{ old('modelYear') }}'>
+                @include('includes/error-field', ['fieldName' => 'modelYear'])
 
                 <label>Parking Agreement </label>
                 <input type='checkbox' name='terms' id='terms' value='terms'>
@@ -72,6 +96,7 @@
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
                     If you have access control systems such as keypads or barrier gates, you may want to include any rules about their use in this section (e.g. ‘staff employees are not permitted to share access control codes with anyone outside the workplace’)
                     </textarea>
+                @include('includes/error-field', ['fieldName' => 'terms'])
 
                 <button type='submit' class='btn btn-primary'>Get a Parking Receipt</button>
 
@@ -89,14 +114,6 @@
         </ul>
     @endif
 
-    @if (!is_null($parkingReceipt))
-        <div class='results alert alert-primary'>
 
-            <p class='receipt'> Parking Ticket Receipt!! </p>
-
-            <p> {{ $parkingReceipt }} </p>
-
-        </div>
-    @endif
 
 @endsection

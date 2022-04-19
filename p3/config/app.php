@@ -176,6 +176,9 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        //p3
+         # NEW:
+    App\Providers\FortifyServiceProvider::class
 
     ],
 
