@@ -303,7 +303,12 @@ class ParkController extends Controller
             return redirect('/parkings')->with(['flash-alert' => 'Parking Ticket not found.' ]);
         }
 
-        return view('parkings/edit', ['parking' =>$parking]);
+        # Get data for customers in alphabetical order by last name
+        $customers = Customer::orderBy('last_name')->select(['id', 'first_name', 'last_name'])->get();
+       
+        return view('parkings/edit', ['parking' => $parking, 'customers' =>$customers]);
+
+        //return view('parkings/edit', ['parking' =>$parking]);
     }
 
     /**
@@ -317,6 +322,7 @@ class ParkController extends Controller
         # If validation fails, it will go back to the same form page for the user to fix the errors!
         $request->validate([
         'slug' => 'required|unique:parkings,slug,'.$parking->id.'|alpha_dash',
+        'customer_id' => 'required',
         'parkingDay' => 'required|date_equals:'. date('m/d/Y'),
         'fromTime' => 'required|date_format:H:i',
         'toTime' => 'required|date_format:H:i|after:fromTime|before: 11:59 PM',
@@ -334,7 +340,7 @@ class ParkController extends Controller
         $parking->parking_lot = $request->parkingLot;
         $parking->license_plate = $request->plate;
         //$parking->owner = $request->owner;
-        $parking->owner = 'TEST';
+        $parking->customer_id = $request->customer_id;
         $parking->model_year = $request->modelYear;
         //$parking->parkingDay = $request->parkingDay;
         dump((Carbon::parse($request->fromTime))->format('H:i'));
@@ -376,6 +382,6 @@ class ParkController extends Controller
         $parking = Parking::findBySlug($slug);
         $parking->delete();
 
-        return redirect('/parkings')->with(['flash-alert' => '"'. $parking->plate . '" was deleted.' ]);
+        return redirect('/parkings')->with(['flash-alert' => '"'. $parking->license_plate . '" was deleted.' ]);
     }
 }

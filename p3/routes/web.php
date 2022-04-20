@@ -56,7 +56,7 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::get('/parking/{vehicle}', [ParkController::class, 'show']);
-    Route::get('/list', [ListController::class, 'list']);
+    Route::get('/list', [ListController::class, 'show']);
 
 
     /**
