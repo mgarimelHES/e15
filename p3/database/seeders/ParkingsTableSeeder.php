@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 
 use Illuminate\Support\Str;
 use App\Models\Parking; # Make sure Parking Model is accessible
+use App\Models\Customer;
 use Faker\Factory; # We’ll use this library to generate random/fake data
 
 use Carbon\Carbon;
@@ -45,7 +46,8 @@ class ParkingsTableSeeder extends Seeder
         $parking->updated_at = $parking->created_at;
         $parking->parking_lot = 'Lot-East';
         $parking->license_plate = 'abc-999';
-        $parking->owner = 'Anthony Weir';
+        // $parking->owner = 'Anthony Weir';
+        $parking->customer_id = Customer::where('last_name', '=', 'Weir')->pluck('id')->first();
         $parking->model_year = 2011;
         $parking->parking_start_time = '2022-04-01 01:23:45';
         $parking->parking_end_time = '2022-04-01 03:01:01';
@@ -66,6 +68,15 @@ class ParkingsTableSeeder extends Seeder
         $parkings = json_decode($parkingData, true);
 
         foreach ($parkings as $slug => $parkingData) {
+
+             # Extract just the last name from the parking data...
+            # F. Scott Fitzgerald => ['F.', 'Scott', 'Fitzgerald'] => 'Fitzgerald'
+            $name = explode(' ', $parkingData['owner']);
+            $lastName = array_pop($name);
+
+            # Find that customer in the customers table
+            $customer_id = Customer::where('last_name', '=', $lastName)->pluck('id')->first();
+
             $parking = new Parking();
 
             $parking->slug = $slug;
@@ -73,7 +84,8 @@ class ParkingsTableSeeder extends Seeder
             $parking->updated_at = $parking->created_at;
             $parking->parking_lot = $parkingData['lot'];
             $parking->license_plate = $parkingData['license_plate'];
-            $parking->owner =  $this->faker->firstName . ' ' . $this->faker->lastName;
+            //$parking->owner =  $this->faker->firstName . ' ' . $this->faker->lastName;
+            $parking->customer_id = $customer_id;
             $parking->model_year =  $this->faker->year;
             $parking->parking_start_time = $parkingData['entry_time'];
             $parking->parking_end_time = $parkingData['exit_time'];
@@ -103,7 +115,8 @@ class ParkingsTableSeeder extends Seeder
             //$parking->parking_lot = 'Lot-West';
             $parking->license_plate = Str::title($license);
             $parking->slug = Str::slug($license, '-');
-            $parking->owner = $this->faker->firstName . ' ' . $this->faker->lastName;
+            //$parking->owner = $this->faker->firstName . ' ' . $this->faker->lastName;
+            $parking->customer_id = null;
             $parking->model_year = $this->faker->year;
             $parking->vehicle_image = '/images/WV_ABC-999.jpg';
             //$parking->make = 'Honda';

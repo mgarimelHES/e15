@@ -13,32 +13,37 @@
 
  <body>
 
+     @if (session('flash-alert'))
+         <div class='flash-alert'>
+             {{ session('flash-alert') }}
+     @endif
+
      <header>
          <a href='/'><img src='/images/parking2.png' id='logo' alt='Parking Logo'></a>
 
          <nav>
              <ul>
-                 
-                <li><a href='/'>Home</a></li>
 
-                @if(Auth::user())
-                    <li><a href='/parkings'>All Parkings Occupied</a></li>
-                    <li><a href='/parkings/create'>Create a Parking Ticket</a></li>
-                    <li><a href='/list'>Your Parking list</a></li>
-                @endif
+                 <li><a href='/'>Home</a></li>
 
-                <li><a href='/contact'>Contact</a></li>
-                
-                <li>
-                    @if(!Auth::user())
-                    <a href='/login'>Login</a>
-                    @else
-                    <form method='POST' id='logout' action='/logout'>
-                        {{ csrf_field() }}
-                        <a href='#' onClick='document.getElementById("logout").submit();'>Logout</a>
-                    </form>
-                    @endif
-                </li>
+                 @if (Auth::user())
+                     <li><a href='/parkings'>All Parkings Occupied</a></li>
+                     <li><a href='/parkings/create'>Create a Parking Ticket</a></li>
+                     <li><a href='/list'>Your Parking list</a></li>
+                 @endif
+
+                 <li><a href='/contact'>Contact</a></li>
+
+                 <li>
+                     @if (!Auth::user())
+                         <a href='/login'>Login</a>
+                     @else
+                         <form method='POST' id='logout' action='/logout'>
+                             {{ csrf_field() }}
+                             <a href='#' onClick='document.getElementById("logout").submit();'>Logout</a>
+                         </form>
+                     @endif
+                 </li>
 
 
              </ul>

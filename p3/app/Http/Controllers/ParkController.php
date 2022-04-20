@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
 use App\Models\Parking;
+use App\Models\Customer;
+use Carbon\Carbon;
 
 class ParkController extends Controller
 {
@@ -43,7 +45,10 @@ class ParkController extends Controller
     ]);
     */
         # Project-3 Create page rendering Here
-        return view('parkings/create');
+        # Get data for customers in alphabetical order by last name
+        $customers = Customer::orderBy('last_name')->select(['id', 'first_name', 'last_name'])->get();
+       
+        return view('parkings/create', ['customers' => $customers]);
     }
 
     /**
@@ -60,6 +65,7 @@ class ParkController extends Controller
         # If validation fails, it will go back to the same form page for the user to fix the errors!
         $request->validate([
             'slug' => 'required|unique:parkings,slug',
+            'customer_id' => 'required',
             'parkingDay' => 'required|date_equals:'. date('m/d/Y'),
             'fromTime' => 'required|date_format:H:i',
             'toTime' => 'required|date_format:H:i|after:fromTime|before: 11:59 PM',
@@ -77,10 +83,11 @@ class ParkController extends Controller
         $parking->parking_lot = $request->parkingLot;
         $parking->license_plate = $request->plate;
         //$parking->owner = $request->owner;
-        $parking->owner = 'TEST';
+        $parking->customer_id = $request->customer_id;
         $parking->model_year = $request->modelYear;
         //$parking->parkingDay = $request->parkingDay;
-        $parking->parking_start_time = $request->fromTime;
+        dump((Carbon::parse($request->fromTime))->format('H:i'));
+        $parking->parking_start_time = Carbon::parse($request->fromTime)->format('H:i');
         $parking->parking_end_time = $request->toTime;
         //$parking->vehicle_image = '/images/WV_ABC-999.jpg';
         $parking->make = $request->make;
@@ -309,7 +316,7 @@ class ParkController extends Controller
        
         # If validation fails, it will go back to the same form page for the user to fix the errors!
         $request->validate([
-        'slug' => 'required|unique:parkings,slug',
+        'slug' => 'required|unique:parkings,slug,'.$parking->id.'|alpha_dash',
         'parkingDay' => 'required|date_equals:'. date('m/d/Y'),
         'fromTime' => 'required|date_format:H:i',
         'toTime' => 'required|date_format:H:i|after:fromTime|before: 11:59 PM',
@@ -330,7 +337,8 @@ class ParkController extends Controller
         $parking->owner = 'TEST';
         $parking->model_year = $request->modelYear;
         //$parking->parkingDay = $request->parkingDay;
-        $parking->parking_start_time = ($request->fromTime)->format('H:i');
+        dump((Carbon::parse($request->fromTime))->format('H:i'));
+        $parking->parking_start_time = (Carbon::parse(($request->fromTime))->format('H:i'));
         $parking->parking_end_time = $request->toTime;
         //$parking->vehicle_image = '/images/WV_ABC-999.jpg';
         $parking->make = $request->make;

@@ -160,7 +160,7 @@ return [
 
     'attributes' => [
         'slug' => 'Parking Space',
-        'owner_id' => 'Owner'
+        'customer_id' => 'Customer'
     ],
 
 ];

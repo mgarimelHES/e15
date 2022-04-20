@@ -15,4 +15,11 @@ class Parking extends Model
     {
         return self::where('slug', '=', $slug)->first();
     }
+
+    public function customer()
+    {
+        # Parking belongs to a Customer
+        # Define an inverse one-to-many relationship.
+        return $this->belongsTo('App\Models\Customer');
+    }
 }

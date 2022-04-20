@@ -16,4 +16,18 @@ class Book extends Model
     {
         return self::where('slug', '=', $slug)->first();
     }
+
+    public function isModern()
+    {
+        # check if the book published year is after Y2K
+        #
+        return $this->published_year> 2000;
+    }
+
+    public function author()
+    {
+        # Book belongs to Author
+        # Define an inverse one-to-many relationship.
+        return $this->belongsTo('App\Models\Author');
+    }
 }

@@ -31,6 +31,16 @@
                 <input type='text' name='slug' id='slug' value='{{ old('slug') }}'>
                 @include('includes/error-field', ['fieldName' => 'slug'])
 
+                <label for='customer_id'>* Customer</label>
+                <select name='customer_id'>
+                    <option value=''>Choose a customer...</option>
+                    @foreach ($customers as $customer)
+                        <option value='{{ $customer->id }}' {{ old('customer_id') == $customer->id ? 'selected' : '' }}>
+                            {{ $customer->first_name . ' ' . $customer->last_name }}</option>
+                    @endforeach
+                </select>
+                @include('includes.error-field', ['fieldName' => 'customer_id'])
+
                 <label for="parkingDay">Date:</label>
                 <input type="date" id="parkingDay" name="parkingDay" value='{{ old('parkingDay') }}'>
                 @include('includes/error-field', ['fieldName' => 'parkingDay'])

@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <h1>Edit a specific parking spot - {{ $parking->license_plate }}</h1>
+    <h1>Edit a specific parking spot for - {{ $parking->license_plate }}</h1>
     <p>Open from <time>12:00 AM </time> to <time>11:59 PM</time> every weekday.</p>
 
     <form method='POST' action='/parkings/{{ $parking->slug }}'>

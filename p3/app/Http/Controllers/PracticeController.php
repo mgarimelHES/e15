@@ -6,12 +6,80 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Parking;
 use App\Models\Review;
+use App\Models\Customer;
+use Carbon\Carbon;
 
 use Str;
 use Illuminate\Support\Facades\Auth;
 
 class PracticeController extends Controller
 {
+    /**
+       * 14th practice example - check customer/parking relationships queries using eager loading
+       * GET /practice/14
+       */
+    public function practice14(Request $request)
+    {
+        # Eager load the customer with the parking information
+        $parkings = Parking::with('customer')->get();
+
+        foreach ($parkings as $parking) {
+            if ($parking->customer) {
+                dump($parking->customer->first_name.' '.$parking->customer->last_name.' owns '.$parking->license_plate);
+            } else {
+                dump($parking->license_plate. ' has no customer info associated with it.');
+            }
+        }
+
+        dump($parkings->toArray());
+    }
+            
+    /**
+        * 13th practice example - check customer/parking relationships queries
+        * GET /practice/13
+        */
+    public function practice13(Request $request)
+    {
+        # Get a sample parking
+        $parking = Parking::whereNotNull('customer_id')->first();
+
+        # Get the customer info from this parking using the "customer" dynamic property
+        # "customer" corresponds to the the relationship method defined in the Parking model
+        $customer = $parking->customer;
+
+        # Output
+        dump('License Plate ' . $parking->license_plate.' was owned by '.$customer->first_name.' '.$customer->last_name);
+        dump($parking->toArray());
+    }
+         
+    /**
+        * 12th practice example - check customer/parking relationships
+        * GET /practice/12
+        */
+    public function practice12(Request $request)
+    {
+        $customer = Customer::where('first_name', '=', 'R.K.')->first();
+
+        $parking = new Parking;
+        $parking->slug = 'W1001-A';
+        $parking->parking_lot = "Lot-West";
+        $parking->license_plate = "CO-123A";
+        $parking->model_year = 2001;
+        $parking->make = "Toyota";
+        $parking->model = "Corolla";
+
+        $parking->parking_start_time = Carbon::now()->format('H:i:m'); //current time
+        $parking->parking_end_time = $parking->parking_start_time;
+       
+        $parking->vehicle_image = "/images/WV_ABC-999.jpg";
+        $parking->customer()->associate($customer); # <--- Associate a customer with this parking
+        $parking->description = 'Fantastic Beasts and Where to Find Them is a 2001 guide book written by British author J. K. Rowling (under the pen name of the fictitious author Newt Scamander) about the magical creatures in the Harry Potter universe. The original version, illustrated by the author herself, purports to be Harry Potter’s copy of the textbook of the same name mentioned in Harry Potter and the Philosopher’s Stone (or Harry Potter and the Sorcerer’s Stone in the US), the first novel of the Harry Potter series. It includes several notes inside it supposedly handwritten by Harry, Ron Weasley, and Hermione Granger, detailing their own experiences with some of the beasts described, and including in-jokes relating to the original series.';
+        
+        $parking->save();
+
+        dump($parking->toArray());
+    }
+        
     /**
         * 11h practice example - check user info
         * GET /practice/11
