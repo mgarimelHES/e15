@@ -55,8 +55,14 @@ Route::group(['middleware' => 'auth'], function () {
         return 'Your parking information vehicle license plate#'.$id;
     });
 
+    /**
+     * Parking Ticket - Listing
+     */
+
     Route::get('/parking/{vehicle}', [ParkController::class, 'show']);
     Route::get('/list', [ListController::class, 'show']);
+    Route::get('/list/{slug}/add', [ListController::class, 'add']);
+    Route::post('/list/{slug?}/save', [ListController::class, 'save']);
 
 
     /**

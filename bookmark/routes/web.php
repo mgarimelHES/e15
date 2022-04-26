@@ -73,8 +73,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Process the form to delete a specific book
     Route::delete('/books/{slug}/', [BookController::class,'destroy']);
-
+    /**
+     * Book - List
+     */
     Route::get('/list', [ListController::class, 'show']);
+    Route::get('/list/{slug}/add', [ListController::class, 'add']);
+    Route::post('/list/{slug?}/save', [ListController::class, 'save']);
 });
 // Route group  end to restrict allowed users
 

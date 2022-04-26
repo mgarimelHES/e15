@@ -6,12 +6,94 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Book;
 use App\Models\Author;
+use App\Models\User;
+
 use Str;
 
 use Illuminate\Support\Facades\Auth;
 
 class PracticeController extends Controller
 {
+    /**
+       * 18th practice example as per week12 assignment of many-to-many
+       * GET /practice/18
+       */
+
+    public function practice18(Request $request)
+    {
+        $user = User::where('email', '=', 'jamal@harvard.edu')->first();
+
+        $book = Book::where('title', '=', 'The Martian')->first();
+
+        $user->books()->save($book); //without notes since it can be null
+    }
+
+    
+    /**
+       * 17th practice example as per week12 assignment of many-to-many
+       * GET /practice/17
+       */
+
+    public function practice17(Request $request)
+    {
+        // $books = Book::all(); // mmore queries
+        // using eager loading below
+        $books = Book::with('users')->get();
+        
+        foreach ($books as $book) {
+            dump($book->title);
+            foreach ($book->users as $user) {
+                dump($user->toArray());
+            }
+        }
+    }
+
+    /**
+       * 16th practice example as per week12 assignment of many-to-many
+       * GET /practice/16
+       */
+
+    public function practice16(Request $request)
+    {
+        # Eager load users to reduce number of queries
+        # (Suggestion: Try this without the `with` and watch how it greatly increases the number of queries)
+        $book = Book::where('title', '=', 'The Great Gatsby')->first();
+        dump($book->users->toArray());
+        
+        $books = Book::with('users')->get();
+
+        foreach ($books as $book) {
+            if ($book->users->count() == 0) {
+                dump($book->title . ' is not on any user’s list');
+            } else {
+                dump($book->title . ' is on the following user’s lists:');
+
+                foreach ($book->users as $user) {
+                    dump($user->email);
+                }
+            }
+        }
+    }
+     
+    /**
+       * 15th practice example as per week12 assignment of many-to-many
+       * GET /practice/15
+       */
+
+    public function practice15(Request $request)
+    {
+        $user = User::where('email', '=', 'jill@harvard.edu')->first();
+
+        dump($user->books->toArray());
+
+        dump($user->name . ' has the following books on their list: ');
+
+        # Note how we can treate the `books` relationship as a dynamic propert ($user->books)
+        foreach ($user->books as $book) {
+            dump($book->title);
+        }
+    }
+   
     /**
       * 14th practice example as per week11 assignment of one-to-many
       * GET /practice/14

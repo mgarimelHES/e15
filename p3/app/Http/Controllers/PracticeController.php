@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Parking;
 use App\Models\Review;
 use App\Models\Customer;
+use App\Models\User;
+
 use Carbon\Carbon;
 
 use Str;
@@ -14,6 +16,47 @@ use Illuminate\Support\Facades\Auth;
 
 class PracticeController extends Controller
 {
+    /**
+    * 16th practice example - check customer/parking relationships queries many-to-many week12
+    * GET /practice/16
+    *
+    */
+    public function practice16()
+    {
+        # Eager load users to reduce number of queries
+        # (Suggestion: Try this without the `with` and watch how it greatly increases the number of queries)
+        $parkings = Parking::with('users')->get();
+
+        foreach ($parkings as $parking) {
+            if ($parking->users->count() == 0) {
+                dump($parking->license_plate . ' is not on any user’s list');
+            } else {
+                dump($parking->license_plate . ' is on the following user’s lists:');
+
+                foreach ($parking->users as $user) {
+                    dump($user->email);
+                }
+            }
+        }
+    }
+
+    /**
+    * 15th practice example - check customer/parking relationships queries many-to-many week12
+    * GET /practice/15
+    *
+    */
+    public function practice15()
+    {
+        $user = User::where('email', '=', 'jill@harvard.edu')->first();
+
+        dump($user->name . ' has the following parkings on their list: ');
+
+        # Note how we can treate the `parkings` relationship as a dynamic propert ($user->parkings)
+        foreach ($user->parkings as $parking) {
+            dump($parking->license_plate);
+        }
+    }
+    
     /**
        * 14th practice example - check customer/parking relationships queries using eager loading
        * GET /practice/14

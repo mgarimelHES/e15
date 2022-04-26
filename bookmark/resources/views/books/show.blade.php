@@ -28,6 +28,8 @@
             <a href='{{ $book->info_url }}'>Learn more...</a>
         </p>
         <ul class='bookActions'>
+            <li><a href='/list/{{ $book->slug }}/add' dusk='add-button'><i class="fa fa-plus"></i> Add to your
+                    list</a>
             <li><a href='/books/{{ $book->slug }}/edit' dusk='edit-button'><i class="fa fa-edit"></i> Edit</a>
             <li><a href='/books/{{ $book->slug }}/delete' dusk='delete-button'><i class="fa fa-trash"></i> Delete</a>
         </ul>

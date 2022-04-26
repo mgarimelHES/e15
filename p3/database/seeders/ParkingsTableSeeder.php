@@ -30,8 +30,8 @@ class ParkingsTableSeeder extends Seeder
 
         # Three different examples of how to add books
         //$this->addOneParking();
-        //$this->addAllParkingsFromParkingsDotJsonFile();
-        $this->addRandomlyGeneratedParkingsUsingFaker();
+        $this->addAllParkingsFromParkingsDotJsonFile();
+        // $this->addRandomlyGeneratedParkingsUsingFaker();
     }
 
     /**
@@ -64,15 +64,16 @@ class ParkingsTableSeeder extends Seeder
      */
     private function addAllParkingsFromParkingsDotJsonFile()
     {
-        $parkingData = file_get_contents(database_path('parkings.json'));
+        $parkingData = file_get_contents(database_path('parkings3.json'));
         $parkings = json_decode($parkingData, true);
 
         foreach ($parkings as $slug => $parkingData) {
 
              # Extract just the last name from the parking data...
             # F. Scott Fitzgerald => ['F.', 'Scott', 'Fitzgerald'] => 'Fitzgerald'
-            $name = explode(' ', $parkingData['owner']);
-            $lastName = array_pop($name);
+            //$name = explode(' ', $parkingData['owner']);
+            //$lastName = array_pop($name);
+            $lastName = 'Smith';
 
             # Find that customer in the customers table
             $customer_id = Customer::where('last_name', '=', $lastName)->pluck('id')->first();

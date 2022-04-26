@@ -1,0 +1,104 @@
+{
+    "parkingRece1pt-1": {
+        "lot": "Lot-East",
+        "floor": "First Floor",
+        "license_plate": "abc-999",
+        "entry_time": "12:45:56",
+        "exit_time": "14:45:56",
+        "plate_img": "/images/WV_ABC-999.jpg",
+        "paid": true,
+        "hes_parking_url": "https://www.transportation.harvard.edu/parking/students-tenants/extension-school",
+        "tags": [
+            "covered",
+            "no_attendee",
+            "self_parking",
+            "CCTV"
+        ],
+        "terms": "The Parking is at owner's discretion, we are not responsible for any damage to your vehicle"
+    },
+    "parkingReceipt-2": {
+        "lot": "Lot-West",
+        "floor": "First Floor",
+        "license_plate": "Mur-999",
+        "entry_time": "12:45:56",
+        "exit_time": "13:45:56",
+        "plate_img": "/images/AL_mur999.jpg",
+        "paid": true,
+        "hes_parking_url": "https://www.transportation.harvard.edu/parking/students-tenants/extension-school",
+        "tags": [
+            "covered",
+            "no_attendee",
+            "self_parking",
+            "CCTV"
+        ],
+        "terms": "The Parking is at owner's discretion, we are not responsible for any damage to your vehicle"
+    },
+    "parkingReceipt-3": {
+        "lot": "Lot-West",
+        "floor": "First Floor",
+        "license_plate": "HES-011",
+        "entry_time": "12:45:56",
+        "exit_time": "13:45:56",
+        "plate_img": "/images/ma_HES-011.jpg",
+        "paid": true,
+        "hes_parking_url": "https://www.transportation.harvard.edu/parking/students-tenants/extension-school",
+        "tags": [
+            "covered",
+            "no_attendee",
+            "self_parking",
+            "CCTV"
+        ],
+        "terms": "The Parking is at owner's discretion, we are not responsible for any damage to your vehicle"
+    },
+    "parkingReceipt-4": {
+        "lot": "Lot-West",
+        "floor": "Second Floor",
+        "license_plate": "Mur-012",
+        "entry_time": "12:45:56",
+        "exit_time": "15:45:56",
+        "plate_img": "/images/CO_Mur-012.jpg",
+        "paid": true,
+        "hes_parking_url": "https://www.transportation.harvard.edu/parking/students-tenants/extension-school",
+        "tags": [
+            "covered",
+            "no_attendee",
+            "self_parking",
+            "CCTV"
+        ],
+        "terms": "The Parking is at owner's discretion, we are not responsible for any damage to your vehicle"
+    },
+    "parkingReceipt-5": {
+        "lot": "Lot-West",
+        "floor": "Second Floor",
+        "license_plate": "Mur-005",
+        "entry_time": "12:45:56",
+        "exit_time": "16:45:56",
+        "plate_img": "/images/MA_mur999.jpg",
+        "paid": true,
+        "hes_parking_url": "https://www.transportation.harvard.edu/parking/students-tenants/extension-school",
+        "tags": [
+            "covered",
+            "no_attendee",
+            "self_parking",
+            "CCTV"
+        ],
+        "terms": "The Parking is at owner's discretion, we are not responsible for any damage to your vehicle"
+    },
+    "parkingReceipt-6": {
+        "lot": "Lot-East",
+        "floor": "Second Floor",
+        "license_plate": "Mur-006",
+        "entry_time": "12:45:56",
+        "exit_time": "18:45:56",
+        "plate_img": "/images/CO_Mur-006.jpg",
+        "paid": true,
+        "hes_parking_url": "https://www.transportation.harvard.edu/parking/students-tenants/extension-school",
+        "tags": [
+            "covered",
+            "no_attendee",
+            "self_parking",
+            "CCTV"
+        ],
+        "terms": "The Parking is at owner's discretion, we are not responsible for any damage to your vehicle"
+    }
+}

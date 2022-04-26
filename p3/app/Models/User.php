@@ -41,4 +41,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function parkings()
+    {
+        return $this->belongsToMany('App\Models\Parking')
+            ->withTimestamps() # Must be added to have Eloquent update the created_at/updated_at columns in a pivot table
+            ->withPivot('comments'); # Must also specify any other fields that should be included when fetching this relationship
+    }
 }
