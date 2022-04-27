@@ -21,7 +21,8 @@
             <h2>New Parkings</h2>
             <ul class='clean-list'>
                 @foreach ($newParkings as $parking)
-                    <li><a href='/parkings/{{ $parking->slug }}'>{{ $parking->license_plate }}</a></li>
+                    <li><a test='new-parking-link'
+                            href='/parkings/{{ $parking->slug }}'>{{ $parking->license_plate }}</a></li>
                 @endforeach
             </ul>
         </div>

@@ -17,6 +17,48 @@ use Illuminate\Support\Facades\Auth;
 class PracticeController extends Controller
 {
     /**
+       * 18th practice example as per week12 assignment for delete
+       * GET /practice/18
+       */
+    public function practice18()
+    {
+        # As an example, grab a user we know has parkings on their list
+        $user = User::where('email', '=', 'jill@harvard.edu')->first();
+        
+        # Grab the first parking on their list
+        $parking = $user->parkings()->first();
+        
+        # Delete the relationship
+        $parking->pivot->delete();
+        
+        # Confirm it worked
+        return 'Delete complete. Check the `parking_user` table to confirm.';
+    }
+  
+    
+    /**
+      * 17th practice example as per week12 assignment for update
+      * GET /practice/17
+      */
+
+    public function practice17()
+    {
+        # As an example, grab a user we know has parkings on their list
+        $user = User::where('email', '=', 'jill@harvard.edu')->first();
+        
+        # Grab the first parking on their list
+        $parking = $user->parkings()->first();
+        
+        # Update and save the comments for this relationship
+        $parking->pivot->comments = "New note for updaate practice...";
+        $parking->pivot->save();
+        
+        # Confirm it worked
+        return 'Update complete. Check the `parking_user` table to confirm.';
+    }
+      
+    
+    /**
     * 16th practice example - check customer/parking relationships queries many-to-many week12
     * GET /practice/16
     *

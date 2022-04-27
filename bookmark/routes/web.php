@@ -5,6 +5,19 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ListController;
 use App\Http\Controllers\PracticeController;
+use App\Http\Controllers\TestController;
+
+use Illuminate\Support\Facades\App;
+
+# Only enable the following development-specific routes if we’re *not* running the application in the `production` environment
+if (!App::environment('production')) {
+    Route::get('/test/login-as/{userId}', [TestController::class, 'loginAs']);
+    Route::get('/test/refresh-database', [TestController::class, 'refreshDatabase']);
+
+    # It’s a good idea to move the practice route into this if condition
+    # so that our practice routes are not available on production
+    Route::any('/practice/{n?}', [PracticeController::class, 'index']);
+}
 
 /*
 |--------------------------------------------------------------------------

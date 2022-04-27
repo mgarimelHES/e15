@@ -15,6 +15,46 @@ use Illuminate\Support\Facades\Auth;
 class PracticeController extends Controller
 {
     /**
+       * 20th practice example as per week12 assignment for update
+       * GET /practice/20
+       */
+
+    public function practice20()
+    {
+        # As an example, grab a user we know has books on their list
+        $user = User::where('email', '=', 'jill@harvard.edu')->first();
+      
+        # Grab the first book on their list
+        $book = $user->books()->first();
+      
+        # Update and save the notes for this relationship
+        $book->pivot->notes = "New note...";
+        $book->pivot->save();
+      
+        # Confirm it worked
+        return 'Update complete. Check the `book_user` table to confirm.';
+    }
+    
+    /**
+       * 19th practice example as per week12 assignment for delete
+       * GET /practice/19
+       */
+    public function practice19()
+    {
+        # As an example, grab a user we know has books on their list
+        $user = User::where('email', '=', 'jill@harvard.edu')->first();
+      
+        # Grab the first book on their list
+        $book = $user->books()->first();
+      
+        # Delete the relationship
+        $book->pivot->delete();
+      
+        # Confirm it worked
+        return 'Delete complete. Check the `book_user` table to confirm.';
+    }
+
+    /**
        * 18th practice example as per week12 assignment of many-to-many
        * GET /practice/18
        */
