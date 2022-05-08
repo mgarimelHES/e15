@@ -1,0 +1,76 @@
+<!doctype html>
+ <html lang='en'>
+
+ <head>
+     <title>    Confirm deleting a spefic parking slot 
+</title>
+     <meta charset='utf-8'>
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+     <link href='/css/parking.css' type='text/css' rel='stylesheet'>
+         <link href='/css/parkings/delete.css' rel='stylesheet'>
+ </head>
+
+ <body>
+
+     
+     <header>
+         <a href='/'><img src='/images/parking2.png' id='logo' alt='Parking Logo'></a>
+
+         <nav>
+             <ul>
+
+                 <li><a href='/'>Home</a></li>
+
+                                      <li><a href='/parkings'>All Parkings Occupied</a></li>
+                     <li><a href='/parkings/create'>Create a Parking Ticket</a></li>
+                     <li><a href='/list'>Your Parking list</a></li>
+                 
+                 <li><a href='/contact'>Contact</a></li>
+
+                 <li>
+                                              <form method='POST' id='logout' action='/logout'>
+                             <input type="hidden" name="_token" value="gMwIwhuWwaZ4TiVrxNf7pmL8OvSHn7OpZrchqeQf">
+
+                             
+
+                             <button type='submit' class='button-link' test='logout-button'>
+                                 Logout
+                             </button>
+
+
+                         </form>
+                                      </li>
+
+
+             </ul>
+         </nav>
+     </header>
+
+
+     <section id='main'>
+             <h1>Confirm deletion!!</h1>
+
+    <p>Are you sure you want to delete <strong></strong>?</p>
+    <p>Please aware that once you delete or exit, you have to pay again to park.</p>
+
+    <form method='POST' action='/parkings/parkingReceipt-2'>
+        <div class='details'>* Required fields</div>
+        <input type="hidden" name="_token" value="gMwIwhuWwaZ4TiVrxNf7pmL8OvSHn7OpZrchqeQf">
+        <input type="hidden" name="_method" value="delete">
+
+        <button type='submit' class='btn btn-danger btn-small'>Yes, delete it!!</button>
+    </form>
+
+    <p class='cancel'>
+        <a href='/parkings/parkingReceipt-2 '>No, I want to keep it.</a>
+         </section>
+
+     <footer>
+         &copy; YourParking, Inc.
+     </footer>
+
+ </body>
+
+ </html>

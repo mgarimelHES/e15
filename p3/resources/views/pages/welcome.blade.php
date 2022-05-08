@@ -6,11 +6,11 @@
 
 @section('content')
 
-@if(Auth::user())
-<h2>
-    Hello {{ Auth::user()->name }}!
-</h2>
-@endif
+    @if (Auth::user())
+        <h2>
+            Hello {{ Auth::user()->name }}!
+        </h2>
+    @endif
 
     <p>
         Welcome to YourParking&mdash; an online parking lot that lets you track and share a history of parkings with
@@ -24,7 +24,8 @@
         <fieldset>
             <label for='searchTerms'>
                 Search terms:
-                <input type='text' name='searchTerms' id='searchTerms' value='{{ old('searchTerms') }}'>
+                <input test='search-input' type='text' name='searchTerms' id='searchTerms'
+                    value='{{ old('searchTerms') }}'>
             </label>
         </fieldset>
 
@@ -43,7 +44,7 @@
 
         </fieldset>
 
-        <button type='submit' class='btn btn-primary'>Search</button>
+        <button test='search-button' type='submit' class='btn btn-primary'>Search</button>
 
         @if (count($errors) > 0)
             <ul class='alert alert-danger'>
@@ -68,7 +69,8 @@
 
                 <ul class='clean-list'>
                     @foreach ($searchResults as $slug => $parking)
-                        <li><a href='/parkings/{{ $slug }}'> {{ $parking['lot'] }}</a></li>
+                        <li><a test='search-result-link' href='/parkings/{{ $slug }}'> {{ $parking['lot'] }}</a>
+                        </li>
                     @endforeach
                 </ul>
             </div>

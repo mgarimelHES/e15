@@ -45,4 +45,38 @@ class ListController extends Controller
         'flash-alert' => 'The parking ' .$parking->license_plate. ' was added to your parking list.'
     ]);
     }
+
+    /**
+    * PUT /list/{slug?}/update
+    */
+    public function update(Request $request, $slug)
+    {
+        $parking = Parking::findBySlug($slug);
+        $user = $request->user();
+
+        $parking = $user->parkings()->where('parkings.id', $parking->id)->first();
+
+        $parking->pivot->comments = $request->comments;
+        $parking->pivot->save();
+
+        return redirect('/list')->with([
+            'flash-alert' => 'Your comments for ' .$parking->license_plate. ' was updated.'
+        ]);
+    }
+     
+    /**
+     * DELETE /list/{slug}/destroy
+     */
+    public function destroy(Request $request, $slug)
+    {
+        $parking = $request->user()->parkings()->where('slug', $slug)->first();
+        
+        $parking->pivot->delete();
+
+        # Because we can delete a parking  from either the individual parking page
+        # or the list page, we redirect to whatever page this request came from
+        return redirect($request->headers->get('referer'))->with([
+            'flash-alert' => 'The parking ' . $parking->license_plate . ' was removed from your parking list'
+        ]);
+    }
 }

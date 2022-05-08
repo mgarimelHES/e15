@@ -5,7 +5,6 @@
 @endsection
 
 @section('content')
-
     <h1>Edit a book {{ $book->title }}</h1>
 
     <form method='POST' action='/books/{{ $book->slug }}'>
@@ -14,7 +13,7 @@
         {{ method_field('put') }}
 
         <label for='slug'>* Short URL</label>
-        <input type='text' name='slug' id='slug' value='{{ old('slug', $book->slug) }}'>
+        <input test='slug-input' type='text' name='slug' id='slug' value='{{ old('slug', $book->slug) }}'>
         <div class='details'>
             This is is a unique URL identifier for the book, containing only alphanumeric characters and dashes.
             <br>It’s suggested that the slug be based on the book title, e.g. a good slug for the book <em>“War and
@@ -23,12 +22,19 @@
         @include('includes/error-field', ['fieldName' => 'slug'])
 
         <label for='title'>* Title</label>
-        <input type='text' name='title' id='title' value='{{ old('title', $book->title) }}'>
+        <input test='title-input' type='text' name='title' id='title' value='{{ old('title', $book->title) }}'>
         @include('includes/error-field', ['fieldName' => 'title'])
 
         <label for='author'>* Author</label>
-        <input type='text' name='author' id='author' value='{{ old('author', $book->author) }}'>
-        @include('includes/error-field', ['fieldName' => 'author'])
+        <select test='author-dropdown' name='author_id'>
+            <option value=''>Choose one...</option>
+            @foreach ($authors as $author)
+                <option value='{{ $author->id }}'
+                    {{ (old('author_id') == $author->id or $book->author->id == $author->id) ? 'selected' : '' }}>
+                    {{ $author->first_name . ' ' . $author->last_name }}</option>
+            @endforeach
+        </select>
+        @include('includes/error-field', ['fieldName' => 'author_id'])
 
 
         <label for='published_year'>* Published Year (YYYY)</label>
@@ -55,14 +61,12 @@
         @include('includes/error-field', ['fieldName' => 'description'])
 
 
-        <button type='submit' class='btn btn-primary'>Update Book</button>
+        <button test='update-book-button' type='submit' class='btn btn-primary'>Update Book</button>
 
         @if (count($errors) > 0)
-            <ul class='alert alert-danger'>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+            <div test='global-error-feedback' class='alert alert-danger'>
+                Please correct the above errors.
+            </div>
         @endif
 
 

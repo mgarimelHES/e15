@@ -5,7 +5,6 @@
 @endsection
 
 @section('content')
-
     @if (session('flash-alert'))
         <div class='flash-alert'>
             {{ session('flash-alert') }}
@@ -21,7 +20,7 @@
         {{ csrf_field() }}
 
         <label for='title'>* Title</label>
-        <input type='text' name='title' id='title' value='{{ old('title') }}'>
+        <input test='title-input' type='text' name='title' id='title' value='{{ old('title') }}'>
         @include('includes/error-field', ['fieldName' => 'title'])
 
 
@@ -31,11 +30,11 @@
             <br>It’s suggested that the slug be based on the book title, e.g. a good slug for the book <em>“War and
                 Peace”</em> would be <em>“war-and-peace”</em>.
         </div>
-        <input type='text' name='slug' id='slug' value='{{ old('slug') }}'>
+        <input test='slug-input' input' type='text' name='slug' id='slug' value='{{ old('slug') }}'>
         @include('includes/error-field', ['fieldName' => 'slug'])
 
         <label for='author_id'>* Author</label>
-        <select name='author_id'>
+        <select test='author-dropdown' name='author_id'>
             <option value=''>Choose one...</option>
             @foreach ($authors as $author)
                 <option value='{{ $author->id }}' {{ old('author_id') == $author->id ? 'selected' : '' }}>
@@ -45,33 +44,34 @@
         @include('includes.error-field', ['fieldName' => 'author_id'])
 
         <label for='published_year'>* Published Year (YYYY)</label>
-        <input type='text' name='published_year' id='published_year' value='{{ old('published_year') }}'>
+        <input test='published-year-input' type='text' name='published_year' id='published_year'
+            value='{{ old('published_year') }}'>
         @include('includes/error-field', ['fieldName' => 'published_year'])
 
         <label for=' cover_url'>Cover URL</label>
-        <input type='text' name='cover_url' id='cover_url' value='{{ old('cover_url', 'http://') }}'>
+        <input test='cover-url-input' type='text' name='cover_url' id='cover_url'
+            value='{{ old('cover_url', 'http://') }}'>
         @include('includes/error-field', ['fieldName' => 'cover_url'])
 
         <label for='info_url'>* Wikipedia URL</label>
-        <input type='text' name='info_url' id='info_url' value='{{ old('info_url', 'http://') }}'>
+        <input test='info-url-input' type='text' name='info_url' id='info_url' value='{{ old('info_url', 'http://') }}'>
         @include('includes/error-field', ['fieldName' => 'info_url'])
 
         <label for='purchase_url'>* Purchase URL </label>
-        <input type='text' name='purchase_url' id='purchase_url' value='{{ old('purchase_url', 'http://') }}'>
+        <input test='purchase-url-input' type='text' name='purchase_url' id='purchase_url'
+            value='{{ old('purchase_url', 'http://') }}'>
         @include('includes/error-field', ['fieldName' => 'purchase_url'])
 
         <label for='description'>Description</label>
-        <textarea name='description'>{{ old('description') }}</textarea>
+        <textarea test='description-textarea' name='description'>{{ old('description') }}</textarea>
         @include('includes/error-field', ['fieldName' => 'description'])
 
-        <button type='submit' class='btn btn-primary'>Add Book</button>
+        <button test='submit-button' type='submit' class='btn btn-primary'>Add Book</button>
 
         @if (count($errors) > 0)
-            <ul class='alert alert-danger'>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+            <div test='global-error-feedback' class='alert alert-danger'>
+                Please correct the above errors.
+            </div>
         @endif
 
 

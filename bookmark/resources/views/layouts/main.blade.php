@@ -26,24 +26,31 @@
              <ul>
                  <li><a href='/'>Home</a></li>
 
-                @if(Auth::user())
-                    <li><a href='/books'>All Books</a></li>
-                    <li><a href='/books/create'>Add a Book</a></li>
-                    <li><a href='/list'>Your list</a></li>
-                @endif
+                 @if (Auth::user())
+                     <li><a href='/books'>All Books</a></li>
+                     <li><a href='/books/create'>Add a Book</a></li>
+                     <li><a href='/list'>Your list</a></li>
+                 @endif
 
                  <li><a href='/contact'>Contact</a></li>
-        
+
                  <li>
-                    @if(!Auth::user())
-                    <a href='/login'>Login</a>
-                    @else
-                    <form method='POST' id='logout' action='/logout'>
-                        {{ csrf_field() }}
-                        <a href='#' onClick='document.getElementById("logout").submit();'>Logout</a>
-                    </form>
-                    @endif
-                  </li>
+                     @if (!Auth::user())
+                         <a test='login-link' href='/login'>Login</a>
+                     @else
+                         <form method='POST' id='logout' action='/logout'>
+                             {{ csrf_field() }}
+
+                             {{-- Codeception can’t invoke our JavaScript so instead of a link thta acts as a submit button, we'll use a button that's styled like a link to submit this form.
+                        <a href='#' onClick='document.getElementById("logout").submit();'>Logout</a> --}}
+
+                             <button type='submit' class='button-link' test='logout-button'>
+                                 Logout
+                             </button>
+
+                         </form>
+                     @endif
+                 </li>
 
              </ul>
          </nav>

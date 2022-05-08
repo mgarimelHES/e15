@@ -5,7 +5,6 @@
 @endsection
 
 @section('content')
-
     @if (session('flash-alert'))
         <div class='flash-alert'>
             {{ session('flash-alert') }}
@@ -24,22 +23,22 @@
                 <p>Open from <time>12:00 AM </time> to <time>11:59 PM</time> every weekday.</p>
 
                 <label for='parkingLot'>* Parking Lot</label>
-                <input type='text' name='parkingLot' id='parkingLot' value='{{ old('parkingLot') }}'>
+                <input test='lot-input' type='text' name='parkingLot' id='parkingLot' value='{{ old('parkingLot') }}'>
                 @include('includes/error-field', ['fieldName' => 'parkingLot'])
 
                 <label for='slug'>* Parking Spot</label>
-                <input type='text' name='slug' id='slug' value='{{ old('slug') }}'>
+                <input test='slug-input' type='text' name='slug' id='slug' value='{{ old('slug') }}'>
                 @include('includes/error-field', ['fieldName' => 'slug'])
 
                 <label for='customer_id'>* Customer</label>
-                <select name='customer_id'>
+                <select test='customer-dropdown' name='customer_id'>
                     <option value=''>Choose a customer...</option>
                     @foreach ($customers as $customer)
                         <option value='{{ $customer->id }}' {{ old('customer_id') == $customer->id ? 'selected' : '' }}>
                             {{ $customer->first_name . ' ' . $customer->last_name }}</option>
                     @endforeach
                 </select>
-                @include('includes.error-field', ['fieldName' => 'customer_id'])
+                @include('includes/error-field', ['fieldName' => 'customer_id'])
 
                 <label for="parkingDay">Date:</label>
                 <input type="date" id="parkingDay" name="parkingDay" value='{{ old('parkingDay') }}'>
@@ -78,26 +77,26 @@
                 <label>Vehicle Information</label>
 
                 <label for='input'>License Plate:</label>
-                <input type='text' name='plate' id='plate' value='{{ old('plate') }}'>
+                <input test='plate-input' type='text' name='plate' id='plate' value='{{ old('plate') }}'>
                 @include('includes/error-field', ['fieldName' => 'plate'])
 
                 <label for='input'>Vehicle Make:</label>
-                <input type='text' name='make' id='make' value='{{ old('make') }}'>
+                <input test='make-input' type='text' name='make' id='make' value='{{ old('make') }}'>
                 @include('includes/error-field', ['fieldName' => 'make'])
 
                 <label for='input'>Vehicle Model:</label>
-                <input type='text' name='model' id='model' value='{{ old('model') }}'>
+                <input test='model-input' type='text' name='model' id='model' value='{{ old('model') }}'>
                 @include('includes/error-field', ['fieldName' => 'model'])
 
                 <label for='input'>Vehicle Year: (YYYY)</label>
-                <input type='text' name='modelYear' id='modelYear' value='{{ old('modelYear') }}'>
+                <input test='year-input' type='text' name='modelYear' id='modelYear' value='{{ old('modelYear') }}'>
                 @include('includes/error-field', ['fieldName' => 'modelYear'])
 
                 <label>Parking Agreement </label>
-                <input type='checkbox' name='terms' id='terms' value='terms'>
+                <input test='terms-input' type='checkbox' name='terms' id='terms' value='terms'>
                 <label>I agree with the following parking terms and conditions</label>
 
-                <textarea readonly id='rules' name='rules' rows='7' cols='80' wrap>
+                <textarea test='rules-textarea' readonly id='rules' name='rules' rows='7' cols='80' wrap>
                     It is important that you should follow our parking lot rules in order to keep our parking lot safe and clean. We expect that you will respect our parking lot and treat it with the same care that you would any other space in our building. You shall not: litter, shall not speed and follow the parking lot limit of 5 miles/hr, shall respect others’ property and vehicles, shall not park overnight.
                     Overnight parked vehciles will be towed at the owner's expense.
 
@@ -108,7 +107,7 @@
                     </textarea>
                 @include('includes/error-field', ['fieldName' => 'terms'])
 
-                <button type='submit' class='btn btn-primary'>Get a Parking Receipt</button>
+                <button test='submit-button' type='submit' class='btn btn-primary'>Get a Parking Receipt</button>
 
                 <p>---->Please place the parking receipt on your car dashboard <---- </p>
 
@@ -117,13 +116,8 @@
     </form>
 
     @if (count($errors) > 0)
-        <ul class='alert alert-danger'>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+        <div test='global-error-feedback' class='alert alert-danger'>
+            Please correct the above errors.
+        </div>
     @endif
-
-
-
 @endsection

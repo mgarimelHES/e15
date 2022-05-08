@@ -36,11 +36,19 @@
 
                  <li>
                      @if (!Auth::user())
-                         <a href='/login'>Login</a>
+                         <a test='login-link' href='/login'>Login</a>
                      @else
                          <form method='POST' id='logout' action='/logout'>
                              {{ csrf_field() }}
-                             <a href='#' onClick='document.getElementById("logout").submit();'>Logout</a>
+
+                             {{-- Codeception can’t invoke our JavaScript so instead of a link thta acts as a submit button, we'll use a button that's styled like a link to submit this form.
+                        <a href='#' onClick='document.getElementById("logout").submit();'>Logout</a> --}}
+
+                             <button type='submit' class='button-link' test='logout-button'>
+                                 Logout
+                             </button>
+
+
                          </form>
                      @endif
                  </li>

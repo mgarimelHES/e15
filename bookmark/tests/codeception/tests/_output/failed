@@ -1,1 +1,1 @@
-tests/acceptance/BookIndexPageCest.php:addsNewUsers
+tests/acceptance/BookEditPageCest.php:editsBook

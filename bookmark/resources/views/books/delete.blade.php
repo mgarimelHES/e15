@@ -14,11 +14,11 @@
     <p>Are you sure you want to delete <strong>{{ $book->title }}</strong>?</p>
 
     <form method='POST' action='/books/{{ $book->slug }}'>
-        <div class='details'>* Required fields</div>
-        {{ csrf_field() }}
-        {{ method_field('delete') }}
 
-        <button type='submit' class='btn btn-danger btn-small'>Yes, delete it!!</button>
+        {{ method_field('delete') }}
+        {{ csrf_field() }}
+
+        <button test='confirm-delete-button' type='submit' class='btn btn-danger btn-small'>Yes, delete it!!</button>
     </form>
 
     <p class='cancel'>

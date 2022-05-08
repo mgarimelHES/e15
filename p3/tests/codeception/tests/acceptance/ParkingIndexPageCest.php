@@ -4,11 +4,19 @@ class ParkingIndexPageCest
 {
     public function _before(AcceptanceTester $I)
     {
+        $I->amOnPage('/test/refresh-database');
     }
 
-    // tests
-    public function tryToTest(AcceptanceTester $I)
+    /**
+     *
+     */
+    public function showsParkings(AcceptanceTester $I)
     {
+        $I->amOnPage('/test/login-as/1');
+        $I->amOnPage('/parkings');
+
+        $I->click('[test=parking-link-parkingReceipt-3]');
+        $I->see('HES-011');
     }
 
     public function showsNewParkings(AcceptanceTester $I)

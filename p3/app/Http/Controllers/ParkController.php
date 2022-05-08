@@ -66,9 +66,9 @@ class ParkController extends Controller
         $request->validate([
             'slug' => 'required|unique:parkings,slug',
             'customer_id' => 'required',
-            'parkingDay' => 'required|date_equals:'. date('m/d/Y'),
-            'fromTime' => 'required|date_format:H:i',
-            'toTime' => 'required|date_format:H:i|after:fromTime|before: 11:59 PM',
+         //   'parkingDay' => 'required|date_equals:'. date('m/d/Y'),
+         //   'fromTime' => 'required|date_format:H:i',
+         //   'toTime' => 'required|date_format:H:i|after:fromTime|before: 11:59 PM',
             'discountType' => 'required',
             'parkingLot' => 'required',
             'plate' => 'required',
@@ -257,7 +257,7 @@ class ParkController extends Controller
      * GET /parkings/{slug}
      * Show the details for an individual vehicle
      */
-    public function show($slug)
+    public function show(Request $request, $slug)
     {
         /* Commented out to use database instead of a Json file
         # Load book data
@@ -277,10 +277,19 @@ class ParkController extends Controller
         ]);
         */
         # Use database
-        $parking = Parking::where('slug', '=', $slug)->first();
+        // $parking = Parking::where('slug', '=', $slug)->first();
+        $parking = Parking::findBySlug($slug);
+
+        
+        if (!$parking) {
+            return redirect('/parkings')->with(['flash-alert' => 'Parking is not found.']);
+        }
+
+        $onList = $parking->users()->where('user_id', $request->user()->id)->count() >= 1;
 
         return view('parkings/show', [
             'parking' => $parking,
+            'onList' => $onList
         ]);
     }
 

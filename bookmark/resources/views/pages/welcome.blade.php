@@ -6,11 +6,11 @@
 
 @section('content')
 
-@if(Auth::user())
-<h2>
-    Hello {{ Auth::user()->name }}!
-</h2>
-@endif
+    @if (Auth::user())
+        <h2>
+            Hello {{ Auth::user()->name }}!
+        </h2>
+    @endif
 
     <p>
         Welcome to Bookmark&mdash; an online book journal that lets you track and share a history of books you’ve read.
@@ -23,7 +23,8 @@
         <fieldset>
             <label for='searchTerms'>
                 Search terms:
-                <input type='text' name='searchTerms' id='searchTerms' value='{{ old('searchTerms') }}'>
+                <input test='search-input' type='text' name='searchTerms' id='searchTerms'
+                    value='{{ old('searchTerms') }}'>
             </label>
         </fieldset>
 
@@ -44,7 +45,7 @@
 
         </fieldset>
 
-        <button type='submit' class='btn btn-primary'>Search</button>
+        <button test='search-button' type='submit' class='btn btn-primary'>Search</button>
 
         @if (count($errors) > 0)
             <ul class='alert alert-danger'>
@@ -69,7 +70,7 @@
 
                 <ul class='clean-list'>
                     @foreach ($searchResults as $slug => $book)
-                        <li><a href='/books/{{ $slug }}'> {{ $book['title'] }}</a></li>
+                        <li><a test='search-result-link' href='/books/{{ $slug }}'> {{ $book['title'] }}</a></li>
                     @endforeach
                 </ul>
             </div>

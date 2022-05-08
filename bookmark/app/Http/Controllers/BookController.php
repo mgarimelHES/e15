@@ -136,7 +136,7 @@ class BookController extends Controller
      * GET /books/{slug}
      * Show the details for an individual book
      */
-    public function show($slug)
+    public function show(Request $request, $slug)
     {
         /* commented out the following code to skip reading from file, instead use database table!
         # Load book data
@@ -153,10 +153,19 @@ class BookController extends Controller
 
         */
         # use Database
-        $book = Book::where('slug', '=', $slug)->first();
+        // $book = Book::where('slug', '=', $slug)->first();
+        $book = Book::findBySlug($slug);
+
+        if (!$book) {
+            return redirect('/books')->with(['flash-alert' => 'Book not found.']);
+        }
+
+        $onList = $book->users()->where('user_id', $request->user()->id)->count() >= 1;
+
 
         return view('books/show', [
             'book' => $book,
+            'onList' => $onList
         ]);
     }
 
@@ -175,11 +184,17 @@ class BookController extends Controller
     public function edit(Request $request, $slug)
     {
         $book = Book::where('slug', '=', $slug)->first();
+
+        $authors = Author::getForDropdown();
+
         if (!$book) {
             return redirect('/books')->with(['flash-alert' => 'Book not found.' ]);
         }
 
-        return view('books/edit', ['book' =>$book]);
+        return view('books/edit', [
+            'book' =>$book,
+            'authors' => $authors
+        ]);
     }
 
     /**
@@ -194,11 +209,11 @@ class BookController extends Controller
             
         'title' => 'required|max:255',
         'slug' => 'required|unique:books,slug,'.$book->id.'|alpha_dash',
-        'author' => 'required|max:255',
+        'author_id' => 'required',
         'published_year' => 'required|digits:4',
-        'cover_url' => 'required|url',
-        'info_url' => 'required|url',
-        'purchase_url' => 'required|url',
+        'cover_url' => 'url',
+        'info_url' => 'url',
+        'purchase_url' => 'url',
         'description' => 'required|min:100'
 
 
@@ -208,7 +223,8 @@ class BookController extends Controller
 
         $book->title = $request->title;
         $book->slug = $request->slug;
-        $book->author = $request->author;
+        // $book->author = $request->author;
+        $book->author_id = $request->author_id;
         $book->published_year = $request->published_year;
         $book->cover_url = $request->cover_url;
         $book->info_url = $request->info_url;

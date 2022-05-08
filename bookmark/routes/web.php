@@ -45,6 +45,14 @@ Route::get('/', [PageController::class, 'welcome']);
 
 Route::group(['middleware' => 'auth'], function () {
     // Restrict authorized users only
+
+    /**
+         * Book - READ
+         */
+
+    Route::get('/books', [BookController::class, 'index']);
+    Route::get('/search', [BookController::class, 'search']);
+
     /**
      * Book - Create
      */
@@ -55,19 +63,15 @@ Route::group(['middleware' => 'auth'], function () {
     # Note the use of the post method in this route
     Route::post('/books', [BookController::class, 'store']);
 
-    /**
-     * Book - READ
-     */
-
-    Route::get('/books', [BookController::class, 'index']);
-    Route::get('/search', [BookController::class, 'search']);
+    
 
 
     //Route::get('/books/{title}', [BookController::class, 'show']);
     Route::get('/books/{slug}', [BookController::class, 'show']);
     Route::get('/books/filter/{category}/{subcategory}', [BookController::class, 'filter']);
+
     //Route::get('/list', [ListController::class, 'show']);
-    Route::get('/list', [BookController::class, 'list']);
+    // Route::get('/list', [BookController::class, 'list']);
 
     /**
      * Book - Update
@@ -92,6 +96,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/list', [ListController::class, 'show']);
     Route::get('/list/{slug}/add', [ListController::class, 'add']);
     Route::post('/list/{slug?}/save', [ListController::class, 'save']);
+    Route::put('/list/{slug}/update', [ListController::class, 'update']);
+    Route::delete('/list/{slug}/destroy', [ListController::class, 'destroy']);
 });
 // Route group  end to restrict allowed users
 

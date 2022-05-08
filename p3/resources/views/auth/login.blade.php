@@ -21,7 +21,7 @@
             <input type='checkbox' name='remember' {{ old('remember') ? 'checked' : '' }}> Remember Me
         </label>
 
-        <button type='submit' class='btn btn-primary'>Login</button>
+        <button test='login-button' type='submit' class='btn btn-primary'>Login</button>
 
         </a>
 

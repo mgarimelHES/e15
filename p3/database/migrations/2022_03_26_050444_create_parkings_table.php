@@ -22,12 +22,13 @@ return new class extends Migration {
             //$table->string('owner');  //commented out owner field to refer customer/owner id in customers field.
             $table->smallInteger('model_year');
             #  $table->string('vehicle_image')->nullable(); # Here we use a column modifier to specify this column can be left empty (null)
-            $table->time('parking_start_time');
-            $table->time('parking_end_time');
+            $table->time('parking_start_time')->nullable();
+            $table->time('parking_end_time')->nullable();
             $table->string('vehicle_image')->nullable();
             $table->string('make');
             $table->string('model');
             $table->text('description');
+            // $table->smallInteger('customer_id');
         });
     }
 

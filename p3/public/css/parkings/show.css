@@ -10,3 +10,16 @@ img.cover {
   height:175px;
   margin-bottom:25px;
 }
+.parkingActions {
+  list-style-type: none;
+}
+
+.parkingActions li {
+  display: inline-block;
+}
+
+.parkingActions li a,
+.parkingActions li button {
+  text-decoration: none;
+  padding-right: 20px;
+}

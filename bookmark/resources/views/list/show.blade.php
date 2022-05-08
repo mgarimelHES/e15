@@ -1,5 +1,9 @@
 @extends('layouts/main')
 
+@section('head')
+    <link href='/css/list/show.css' rel='stylesheet'>
+@endsection
+
 @section('title')
     Your List
 @endsection
@@ -22,13 +26,18 @@
 
                 {{-- In the following two paragraphs, observe how `$book->pivot` is used to access 
             details (`created_at` and `notes`) from the book to user relationship --}}
-                <p class='notes'>
-                    {{ $book->pivot->notes }}
-                </p>
+                <form method='POST' action='/list/{{ $book->slug }}/update'>
+                    {{ csrf_field() }}
+                    {{ method_field('put') }}
+                    <textarea class='notes' name='notes' test='{{ $book->slug }}-notes-textarea'>{{ $book->pivot->notes }}</textarea>
+                    <button type='submit' class='btn btn-primary' test='{{ $book->slug }}-update-button'>Update
+                        notes</button>
+                </form>
 
                 <p class='added'>
                     Added {{ $book->pivot->created_at->diffForHumans() }}
                 </p>
+                @include('includes/remove-from-list')
             </div>
         @endforeach
     @endif

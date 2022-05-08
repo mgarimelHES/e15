@@ -15,11 +15,11 @@
     <p>Please aware that once you delete or exit, you have to pay again to park.</p>
 
     <form method='POST' action='/parkings/{{ $parking->slug }}'>
-        <div class='details'>* Required fields</div>
+
         {{ csrf_field() }}
         {{ method_field('delete') }}
 
-        <button type='submit' class='btn btn-danger btn-small'>Yes, delete it!!</button>
+        <button test='confirm-delete-button' type='submit' class='btn btn-danger btn-small'>Yes, delete it!!</button>
     </form>
 
     <p class='cancel'>

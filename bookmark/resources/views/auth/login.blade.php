@@ -3,7 +3,7 @@
 @section('content')
     <h1>Login</h1>
 
-    Don’t have an account? <a href='/register'>Register here...</a>
+    Don’t have an account? <a test='register-link' href='/register'>Register here...</a>
 
     <form method='POST' action='/login'>
 

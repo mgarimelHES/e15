@@ -1,0 +1,163 @@
+<!doctype html>
+ <html lang='en'>
+
+ <head>
+     <title>    Create a Parking Ticket
+</title>
+     <meta charset='utf-8'>
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+     <link href='/css/parking.css' type='text/css' rel='stylesheet'>
+      </head>
+
+ <body>
+
+     
+     <header>
+         <a href='/'><img src='/images/parking2.png' id='logo' alt='Parking Logo'></a>
+
+         <nav>
+             <ul>
+
+                 <li><a href='/'>Home</a></li>
+
+                                      <li><a href='/parkings'>All Parkings Occupied</a></li>
+                     <li><a href='/parkings/create'>Create a Parking Ticket</a></li>
+                     <li><a href='/list'>Your Parking list</a></li>
+                 
+                 <li><a href='/contact'>Contact</a></li>
+
+                 <li>
+                                              <form method='POST' id='logout' action='/logout'>
+                             <input type="hidden" name="_token" value="ENX1dx6la4GhCtt8XAmA9xhqOZgaLpaC8Crusvjj">
+
+                             
+
+                             <button type='submit' class='button-link' test='logout-button'>
+                                 Logout
+                             </button>
+
+
+                         </form>
+                                      </li>
+
+
+             </ul>
+         </nav>
+     </header>
+
+
+     <section id='main'>
+             
+    <h1>Create a Parking Ticket</h1>
+
+    <p>Want to create a parking ticket for your vehicle? Not a problem- follow the procedure below
+    </p>
+
+    <form method='POST' action='/parkings'>
+
+        <div class='myDiv'>
+            <input type="hidden" name="_token" value="ENX1dx6la4GhCtt8XAmA9xhqOZgaLpaC8Crusvjj">
+            <fieldset>
+                <p>Open from <time>12:00 AM </time> to <time>11:59 PM</time> every weekday.</p>
+
+                <label for='parkingLot'>* Parking Lot</label>
+                <input test='lot-input' type='text' name='parkingLot' id='parkingLot' value=''>
+                
+                <label for='slug'>* Parking Spot</label>
+                <input test='slug-input' type='text' name='slug' id='slug' value=''>
+                
+                <label for='customer_id'>* Customer</label>
+                <select test='customer-dropdown' name='customer_id'>
+                    <option value=''>Choose a customer...</option>
+                                            <option value='3' >
+                            Maya Angel</option>
+                                            <option value='1' >
+                            J. Smith John</option>
+                                            <option value='4' >
+                            R.K. McCoy</option>
+                                            <option value='2' >
+                            Jane Smith</option>
+                                            <option value='6' >
+                            Amy Tan</option>
+                                            <option value='5' >
+                            Anthony Weir</option>
+                                    </select>
+                
+                <label for="parkingDay">Date:</label>
+                <input type="date" id="parkingDay" name="parkingDay" value=''>
+                
+                <label for="appt">Parking from time:</label>
+                <input type="time" id="fromTime" name="fromTime" min="08.00" max="18.00" value=''>
+                
+                <label for="appt">Parking to time:</label>
+                <input type="time" id="toTime" name="toTime" min="08.00" max="18.00" value=''>
+                
+                <label for='input'>Parking Rates:</label>
+
+                <ul>
+                    <li>*** Please aware of hourly rates, no paritial rates. ***</li>
+                    <li>*** Please note the hourly parking rate is $10.00 USD for visitors ***</li>
+                    <li>*** Discount: For Students, Staff and Faculty only!! ***</li>
+                </ul>
+
+                <label for='input'>Are you a visitor or current student, staff or faculty?</label>
+                <input type='radio' test='student-option' name='discountType' id='student' value='student'
+                    checked>
+                <label for='student'>Student</label>
+                <input type='radio' test='staff-option' name='discountType' id='staff' value='staff'
+                    checked>
+                <label for='staff'>Staff</label>
+                <input type='radio' test='faculty-option' name='discountType' id='faculty' value='faculty'
+                    checked>
+                <label for='faculty'>Faculty</label>
+                <input type='radio' test='visitor-option' name='discountType' id='visitor' value='visitor'
+                    checked>
+                <label for='visitor'>Visitor</label>
+
+                <label>Vehicle Information</label>
+
+                <label for='input'>License Plate:</label>
+                <input test='plate-input' type='text' name='plate' id='plate' value=''>
+                
+                <label for='input'>Vehicle Make:</label>
+                <input test='make-input' type='text' name='make' id='make' value=''>
+                
+                <label for='input'>Vehicle Model:</label>
+                <input test='model-input' type='text' name='model' id='model' value=''>
+                
+                <label for='input'>Vehicle Year: (YYYY)</label>
+                <input test='year-input' type='text' name='modelYear' id='modelYear' value=''>
+                
+                <label>Parking Agreement </label>
+                <input test='terms-input' type='checkbox' name='terms' id='terms' value='terms'>
+                <label>I agree with the following parking terms and conditions</label>
+
+                <textarea test='rules-textarea' readonly id='rules' name='rules' rows='7' cols='80' wrap>
+                    It is important that you should follow our parking lot rules in order to keep our parking lot safe and clean. We expect that you will respect our parking lot and treat it with the same care that you would any other space in our building. You shall not: litter, shall not speed and follow the parking lot limit of 5 miles/hr, shall respect others’ property and vehicles, shall not park overnight.
+                    Overnight parked vehciles will be towed at the owner's expense.
+
+                    If there are any specific challenges in your surroundings, such as others walking their dog through the parking lot and leaving a mess, you may want to address those issues in the parking lot rules section as well
+                    You may also want to outline rules against certain types of parking, such as ‘diagonal parking,’ when someone parks diagonally in order to take up two spaces and reduce the chance of another vehicle parking beside their car
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+                    If you have access control systems such as keypads or barrier gates, you may want to include any rules about their use in this section (e.g. ‘staff employees are not permitted to share access control codes with anyone outside the workplace’)
+                    </textarea>
+                
+                <button test='submit-button' type='submit' class='btn btn-primary'>Get a Parking Receipt</button>
+
+                <p>---->Please place the parking receipt on your car dashboard <---- </p>
+
+            </fieldset>
+        </div>
+    </form>
+
+         </section>
+
+     <footer>
+         &copy; YourParking, Inc.
+     </footer>
+
+ </body>
+
+ </html>

@@ -22,13 +22,20 @@
 
                 {{-- In the following two paragraphs, observe how `$parking->pivot` is used to access 
             details (`created_at` and `comments`) from the parking to user relationship --}}
-                <p class='comments'>
-                    {{ $parking->pivot->comments }}
-                </p>
+
+                <form method='POST' action='/list/{{ $parking->slug }}/update'>
+                    {{ csrf_field() }}
+                    {{ method_field('put') }}
+                    <textarea class='comments' name='comments'
+                        test='{{ $parking->slug }}-comments-textarea'>{{ $parking->pivot->comments }}</textarea>
+                    <button type='submit' class='btn btn-primary' test='{{ $parking->slug }}-update-button'>Update
+                        comments</button>
+                </form>
 
                 <p class='added'>
                     Added {{ $parking->pivot->created_at->diffForHumans() }}
                 </p>
+                @include('includes/remove-from-list')
             </div>
         @endforeach
     @endif

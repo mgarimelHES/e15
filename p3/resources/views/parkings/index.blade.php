@@ -4,6 +4,12 @@
     All Parking Receipts
 @endsection
 
+@if (session('flash-alert'))
+    <div class='flash-alert'>
+        {{ session('flash-alert') }}
+    </div>
+@endif
+
 @section('head')
     <link href='/css/parkings/index.css' rel='stylesheet'>
 @endsection
@@ -14,7 +20,7 @@
         <div class='flash-alert'>
             {{ session('flash-alert') }}
     @endif
-    <h1>All Parking Receipts</h1>
+    <h1 test='all-parkings-heading'>All Parking Receipts</h1>
 
     @if (count($parkings) != 0)
         <div id='newParkings'>
@@ -33,7 +39,7 @@
     @else
         <div id='parkings'>
             @foreach ($parkings as $parking)
-                <a class='parking' href='/parkings/{{ $parking->slug }}'>
+                <a test='parking-link-{{ $parking->slug }}' class='parking' href='/parkings/{{ $parking->slug }}'>
                     <h3>{{ $parking->lot }}</h3>
                     <img class='cover' src='{{ $parking->plate_img }}'>
                 </a>

@@ -42,6 +42,16 @@ Route::get('/contact', [PageController::class, 'contact']);
 # Restrict using authentication
 Route::group(['middleware' => 'auth'], function () {
     # Parking CRUD operatings Begin!
+
+    /**
+    * Parking App - Read
+    */
+#
+
+    Route::get('/parkings', [ParkController::class, 'index']);
+    Route::get('/process', [ParkController::class, 'process']);
+    Route::get('/search', [ParkController::class, 'search']);
+
     /**
      * Parking App - Create
      */
@@ -51,14 +61,7 @@ Route::group(['middleware' => 'auth'], function () {
     # Note the use of the post method in this route
     Route::post('/parkings', [ParkController::class, 'store']);
 #
-    /**
-     * Parking App - Read
-     */
-#
-
-    Route::get('/parkings', [ParkController::class, 'index']);
-    Route::get('/process', [ParkController::class, 'process']);
-    Route::get('/search', [ParkController::class, 'search']);
+   
 
     //Route::get('/parkings/{vehicle}', [ParkController::class, 'show']);
     Route::get('/parkings/{slug}', [ParkController::class, 'show']);
@@ -76,6 +79,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/list', [ListController::class, 'show']);
     Route::get('/list/{slug}/add', [ListController::class, 'add']);
     Route::post('/list/{slug?}/save', [ListController::class, 'save']);
+    Route::put('/list/{slug}/update', [ListController::class, 'update']);
+    Route::delete('/list/{slug}/destroy', [ListController::class, 'destroy']);
 
 
     /**
