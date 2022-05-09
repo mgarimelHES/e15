@@ -15,4 +15,13 @@ class Author extends Model
         # Define a one-to-many relationship.
         return $this->hasMany('App\Models\Book');
     }
+
+    /**
+     *
+     */
+    public static function getForDropdown()
+    {
+        # Get data for authors in alphabetical order by last name
+        return self::orderBy('last_name')->select(['id', 'first_name', 'last_name'])->get();
+    }
 }

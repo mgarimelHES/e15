@@ -323,7 +323,7 @@ class PracticeController extends Controller
     {
         dump('This is the sixth example.');
         # First get a parking to update
-        $parking = Parking::where('owner', 'LIKE', '%Anthony%')->first();
+        $parking = Parking::where('customer_id', '=', '1')->first();
 
         if (!$parking) {
             dump("Parking not found, can not update.");
@@ -375,7 +375,8 @@ class PracticeController extends Controller
         $parking->slug = 'parkingRece1pt-1';
         $parking->parking_lot = 'Lot-East';
         $parking->license_plate = 'abc-999';
-        $parking->owner = 'Anthony Weir';
+        //$parking->owner = 'Anthony Weir';
+        $parking->customer_id = 1;
         $parking->model_year = 2011;
         $parking->parking_start_time = '2022-04-01 01:23:45';
         $parking->parking_end_time = '2022-04-01 03:01:01';

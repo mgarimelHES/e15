@@ -20,8 +20,10 @@ class ParkingCreatePageCest
 
         # Act
         $I->amOnPage('/parkings/create');
-        $I->fillField('[test=lot-input]', 'Test Parking');
+      
         $I->fillField('[test=slug-input]', 'test-parking');
+        
+        $I->fillField('[test=lot-input]', 'Test Parking');
         $I->fillField('[test=plate-input]', 'test-plate');
         $I->fillField('[test=model-input]', 'test-model');
         $I->fillField('[test=make-input]', 'test-make');
@@ -31,8 +33,9 @@ class ParkingCreatePageCest
         $I->selectOption('[test=customer-dropdown]', 1);
         $I->fillField('[test=year-input]', 2000);
         $I->selectOption('[test=terms-input]', true);
-        
+
         $I->fillField('[test=rules-textarea]', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in pulvinar libero. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in pulvinar libero. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.');
+       
         $I->click('[test=submit-button]');
 
         # Assert
@@ -71,26 +74,23 @@ class ParkingCreatePageCest
 
         # Act
         $I->amOnPage('/parkings/create');
-        $I->fillField('[test=lot-input]', 'Test Parking');
+      
         
         $I->fillField('[test=slug-input]', 'test-parking'); // duplicate check using an existing slug
-
-        //  $I->selectOption('[test=customer-dropdown]', 1);
-        //  $I->fillField('[test=plate-input]', 'test-plate');
-        //    $I->fillField('[test=model-input]', 'test-model2');
-        //    $I->fillField('[test=make-input]', 'test-make2');
-        // $I->fillField('[test=image-input]', '/images/CO_Mur_006.jpg');
+        
+        $I->fillField('[test=lot-input]', 'Test Parking');
+        $I->selectOption('[test=customer-dropdown]', 1);
+        $I->fillField('[test=plate-input]', 'test-plate');
+        $I->fillField('[test=model-input]', 'test-model3');
+        $I->fillField('[test=make-input]', 'test-make');
 
         $I->fillField('[test=year-input]', 2000);
         $I->selectOption('[test=terms-input]', true);
-        
-        $I->fillField('[test=rules-textarea]', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in pulvinar libero. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in pulvinar libero. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.');
        
         $I->click('[test=submit-button]');
 
         # Assert
-        $I->amOnPage('/parkings/create');
-        $I->see('The Parking Space has already been taken.');
-        // $I->see('The Parking Space has already been taken.', '[test=error-field-slug]');
+       
+        $I->see('The Parking Space has already been taken.', '[test=error-field-slug]');
     }
 }

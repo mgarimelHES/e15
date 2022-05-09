@@ -5,7 +5,6 @@
 @endsection
 
 @section('content')
-
     <h1>Edit a specific parking spot for - {{ $parking->license_plate }}</h1>
     <p>Open from <time>12:00 AM </time> to <time>11:59 PM</time> every weekday.</p>
 
@@ -16,11 +15,12 @@
         <fieldset>
 
             <label for='parkingLot'>* Parking Lot</label>
-            <input type='text' name='parkingLot' id='parkingLot' value='{{ old('parkingLot', $parking->parking_lot) }}'>
+            <input test='lot-input' type='text' name='parkingLot' id='parkingLot'
+                value='{{ old('parkingLot', $parking->parking_lot) }}'>
             @include('includes/error-field', ['fieldName' => 'parkingLot'])
 
             <label for='slug'>* Parking Spot</label>
-            <input type='text' name='slug' id='slug' value='{{ old('slug', $parking->slug) }}'>
+            <input test='slug-input' type='text' name='slug' id='slug' value='{{ old('slug', $parking->slug) }}'>
             <div class='details'>
                 This is is a unique identifier for the parking, containing only alphanumeric characters and dashes.
                 <br>It’s suggested that the slug be based on the parking location, e.g. a floor, row and a number for the
@@ -30,7 +30,7 @@
             @include('includes/error-field', ['fieldName' => 'slug'])
 
             <label for='customer_id'>* Customer</label>
-            <select name='customer_id'>
+            <select test='customer-dropdown' name='customer_id'>
                 <option value=''>Choose a customer...</option>
                 @foreach ($customers as $customer)
                     <option value='{{ $customer->id }}' {{ old('customer_id') == $customer->id ? 'selected' : '' }}>
@@ -92,12 +92,9 @@
             <input type='text' name='modelYear' id='modelYear' value='{{ old('modelYear', $parking->model_year) }}'>
             @include('includes/error-field', ['fieldName' => 'modelYear'])
 
-            <label for='input'>Customer Name:</label>
-            <input type='text' name='owner' id='owner' value='{{ old('owner', $parking->owner) }}'>
-            @include('includes/error-field', ['fieldName' => 'owner'])
 
             <label>Parking Agreement </label>
-            <input type='checkbox' name='terms' id='terms' value='terms'>
+            <input test='terms-input' type='checkbox' name='terms' id='terms' value='terms'>
             <label>I agree with the following parking terms and conditions</label>
 
             <textarea readonly id='rules' name='rules' rows='7' cols='80' wrap>
@@ -111,20 +108,16 @@
                     </textarea>
             @include('includes/error-field', ['fieldName' => 'terms'])
 
-            <button type='submit' class='btn btn-primary'>Update a Parking Ticket</button>
+            <button test='update-parking-button' type='submit' class='btn btn-primary'>Update a Parking Ticket</button>
 
             <p>---->Please place the parking receipt on your car dashboard <---- </p>
         </fieldset>
 
         @if (count($errors) > 0)
-            <ul class='alert alert-danger'>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+            <div test='global-error-feedback' class='alert alert-danger'>
+                Please correct the above errors.
+            </div>
         @endif
-
-
 
 
     </form>

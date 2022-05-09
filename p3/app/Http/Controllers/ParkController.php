@@ -63,8 +63,13 @@ class ParkController extends Controller
         #
         #
         # If validation fails, it will go back to the same form page for the user to fix the errors!
+        
+
         $request->validate([
             'slug' => 'required|unique:parkings,slug',
+           // 'slug' => 'required|unique:parkings,slug,alpha_dash',
+          //  'slug' => 'required|unique:parkings,slug,'.$parking->id.'|alpha_dash',
+          //'slug' => 'required|unique:parkings,slug,' . $parking->id . '|alpha_dash',
             'customer_id' => 'required',
          //   'parkingDay' => 'required|date_equals:'. date('m/d/Y'),
          //   'fromTime' => 'required|date_format:H:i',
@@ -331,14 +336,15 @@ class ParkController extends Controller
         # If validation fails, it will go back to the same form page for the user to fix the errors!
         $request->validate([
         'slug' => 'required|unique:parkings,slug,'.$parking->id.'|alpha_dash',
+       
         'customer_id' => 'required',
-        'parkingDay' => 'required|date_equals:'. date('m/d/Y'),
-        'fromTime' => 'required|date_format:H:i',
-        'toTime' => 'required|date_format:H:i|after:fromTime|before: 11:59 PM',
-        'discountType' => 'required',
+      //  'parkingDay' => 'required|date_equals:'. date('m/d/Y'),
+    //    'fromTime' => 'required|date_format:H:i',
+    //    'toTime' => 'required|date_format:H:i|after:fromTime|before: 11:59 PM',
+    //    'discountType' => 'required',
         'parkingLot' => 'required',
         'plate' => 'required',
-        'make' => 'required',
+       'make' => 'required',
         'model' => 'required',
         'terms' => 'required'
     ]);

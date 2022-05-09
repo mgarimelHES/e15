@@ -195,6 +195,8 @@ class BookController extends Controller
             'book' =>$book,
             'authors' => $authors
         ]);
+
+        dump('Good1');
     }
 
     /**
