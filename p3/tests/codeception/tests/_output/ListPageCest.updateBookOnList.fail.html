@@ -2,35 +2,35 @@
  <html lang='en'>
 
  <head>
-     <title>    Your List
+     <title>    Your Parking List
 </title>
      <meta charset='utf-8'>
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-     <link href='/css/bookmark.css' type='text/css' rel='stylesheet'>
-         <link href='/css/list/show.css' rel='stylesheet'>
- </head>
+     <link href='/css/parking.css' type='text/css' rel='stylesheet'>
+      </head>
 
  <body>
 
      
      <header>
-         <a href='/'><img src='/images/bookmark-logo@2x.png' id='logo' alt='Bookmark Logo'></a>
+         <a href='/'><img src='/images/parking2.png' id='logo' alt='Parking Logo'></a>
 
          <nav>
              <ul>
+
                  <li><a href='/'>Home</a></li>
 
-                                      <li><a href='/books'>All Books</a></li>
-                     <li><a href='/books/create'>Add a Book</a></li>
-                     <li><a href='/list'>Your list</a></li>
+                                      <li><a href='/parkings'>All Parkings Occupied</a></li>
+                     <li><a href='/parkings/create'>Create a Parking Ticket</a></li>
+                     <li><a href='/list'>Your Parking list</a></li>
                  
                  <li><a href='/contact'>Contact</a></li>
 
                  <li>
                                               <form method='POST' id='logout' action='/logout'>
-                             <input type="hidden" name="_token" value="Us7W9jhQQE24tZzoXmES6EWtCLiHLlmh9t0QhLMI">
+                             <input type="hidden" name="_token" value="HLQeniUHHMhLijqhHXpslKKjg5wDhzpMXLT9VLaK">
 
                              
 
@@ -38,23 +38,25 @@
                                  Logout
                              </button>
 
+
                          </form>
                                       </li>
+
 
              </ul>
          </nav>
      </header>
 
+
      <section id='main'>
          
-            <p>You have not added any books to your list yet.</p>
-        <p><a href='/books'>Find books to add in our library...</a></p>
+            <p test='no-parkings-message'>You have not added any of your parkings to your list yet.</p>
+        <p><a href='/parkings'>Find all parkings to add in our garage...</a></p>
     
      </section>
 
      <footer>
-         &copy; Bookmark, Inc.
-         mgarimelHES@g.edu
+         &copy; YourParking, Inc.
      </footer>
 
  </body>

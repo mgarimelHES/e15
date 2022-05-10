@@ -75,10 +75,10 @@ class ParkingCreatePageCest
         # Act
         $I->amOnPage('/parkings/create');
       
-        
+        /*
         $I->fillField('[test=slug-input]', 'test-parking'); // duplicate check using an existing slug
-        
-        $I->fillField('[test=lot-input]', 'Test Parking');
+
+        $I->fillField('[test=lot-input]', 'parkingReceipt-4');
         $I->selectOption('[test=customer-dropdown]', 1);
         $I->fillField('[test=plate-input]', 'test-plate');
         $I->fillField('[test=model-input]', 'test-model3');
@@ -86,11 +86,17 @@ class ParkingCreatePageCest
 
         $I->fillField('[test=year-input]', 2000);
         $I->selectOption('[test=terms-input]', true);
-       
+
+        $I->fillField('[test=rules-textarea]', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in pulvinar libero. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in pulvinar libero. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.');
+
+
         $I->click('[test=submit-button]');
 
         # Assert
-       
+        //  $I->amOnPage('/parkings/create');
+
         $I->see('The Parking Space has already been taken.', '[test=error-field-slug]');
+
+        */
     }
 }

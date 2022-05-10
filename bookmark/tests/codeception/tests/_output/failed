@@ -1,0 +1,5 @@
+tests/acceptance/ListFeatureCest.php:removeBookFromListFromBookPage
+tests/acceptance/ListFeatureCest.php:showsEmptyList
+tests/acceptance/ListFeatureCest.php:addsBookToList
+tests/acceptance/ListFeatureCest.php:removesBookFromList
+tests/acceptance/ListFeatureCest.php:updateBookOnList

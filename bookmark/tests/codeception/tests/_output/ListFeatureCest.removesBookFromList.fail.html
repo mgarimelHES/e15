@@ -22,17 +22,23 @@
              <ul>
                  <li><a href='/'>Home</a></li>
 
-                                    <li><a href='/books'>All Books</a></li>
-                    <li><a href='/books/create'>Add a Book</a></li>
-                    <li><a href='/list'>Your list</a></li>
-                
+                                      <li><a href='/books'>All Books</a></li>
+                     <li><a href='/books/create'>Add a Book</a></li>
+                     <li><a href='/list'>Your list</a></li>
+                 
                  <li><a href='/contact'>Contact</a></li>
-        
+
                  <li>
-                                        <form method='POST' id='logout' action='/logout'>
-                        <input type="hidden" name="_token" value="5ecrSZDWoRW0ukUzSHC3sT4NdCSJlryAwiu5L9ep">
-                        <a href='#' onClick='document.getElementById("logout").submit();'>Logout</a>
-                    </form>
+                                              <form method='POST' id='logout' action='/logout'>
+                             <input type="hidden" name="_token" value="l88iG6e0Ihh3srlLCzWzXNZzLNwemZOAVRJpfYQ1">
+
+                             
+
+                             <button type='submit' class='button-link' test='logout-button'>
+                                 Logout
+                             </button>
+
+                         </form>
                                       </li>
 
              </ul>
@@ -59,11 +65,13 @@
                         class="fa fa-edit"></i> Edit</a>
             <li><a href='/books/the-great-gatsby/delete' test='delete-button' dusk='delete-button'><i
                         class="fa fa-trash"></i> Delete</a>
-                            <li><a href='/list/the-great-gatsby/add' test='add-to-list-button' dusk='add-button'><i
-                        class="fa fa-plus"></i> Add to your
+
+                            <li>
+                <a href='/list/the-great-gatsby/add' test='add-to-list-button'><i class="fa fa-plus"></i> Add to
                     list</a>
             </li>
-        </ul>
+    
+    </ul>
          </section>
 
      <footer>

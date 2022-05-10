@@ -7,7 +7,7 @@
 @section('content')
 
     @if ($parkings->count() == 0)
-        <p>You have not added any of your parkings to your list yet.</p>
+        <p test='no-parkings-message'>You have not added any of your parkings to your list yet.</p>
         <p><a href='/parkings'>Find all parkings to add in our garage...</a></p>
     @else
         @foreach ($parkings as $parking)

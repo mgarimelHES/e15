@@ -33,16 +33,19 @@
                         class="fa fa-edit"></i> Edit</a>
             <li><a href='/books/{{ $book->slug }}/delete' test='delete-button' dusk='delete-button'><i
                         class="fa fa-trash"></i> Delete</a>
+
                 @if ($onList)
             <li>
                 @include('includes/remove-from-list')
             </li>
         @else
-            <li><a href='/list/{{ $book->slug }}/add' test='add-to-list-button' dusk='add-button'><i
-                        class="fa fa-plus"></i> Add to your
+            <li>
+                <a href='/list/{{ $book->slug }}/add' test='add-to-list-button'><i class="fa fa-plus"></i> Add to
                     list</a>
             </li>
     @endif
+
     </ul>
     @endif
+
 @endsection

@@ -12,9 +12,9 @@
         <div class='details'>* Required fields</div>
         {{ csrf_field() }}
 
-        <label for='notes'>YOUR COMMENTS ON THIS PARKING</label>
-        <textarea name='comments'>{{ old('comments') }}</textarea>
+        <label for='comments'>YOUR COMMENTS ON THIS PARKING</label>
+        <textarea test='comments-textarea' name='comments'>{{ old('comments') }}</textarea>
 
-        <button class='btn btn-primary'>Add</button>
+        <button type='submit' test='add-to-list-button' class='btn btn-primary'>Add to list</button>
     </form>
 @endsection

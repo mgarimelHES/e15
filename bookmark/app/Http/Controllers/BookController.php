@@ -94,6 +94,8 @@ class BookController extends Controller
         # Redirect back to the form with data/results stored in the session
         # Ref: https://laravel.com/docs/responses#redirecting-with-flashed-session-data
         return redirect('/')->with([
+            'searchTerms' => $searchTerms,
+            'searchType' => $searchType,
             'searchResults' => $searchResults
         ])->withInput();
     }
@@ -260,6 +262,12 @@ class BookController extends Controller
     public function destroy($slug)
     {
         $book = Book::findBySlug($slug);
+
+        # Before we delete this book we first have to delete
+        # In this case, that relationship is for our List feature
+        # that connects users and books
+        $book->users()->detach();
+
         $book->delete();
 
         return redirect('/books')->with(['flash-alert' => '"'. $book->title . '" was deleted.' ]);
