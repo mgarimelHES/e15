@@ -1,0 +1,301 @@
+Codeception PHP Testing Framework v4.1.31 https://helpukrainewin.org
+Powered by PHPUnit 8.5.24 #StandWithUkraine
+
+[1mAcceptance Tests (24) [22m-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+[35;1mLoginPageCest:[39;22m Try to test
+Signature: [32mLoginPageCest:tryToTest[39m
+Test: [32mtests/acceptance/LoginPageCest.php:tryToTest[39m
+[33mScenario --[39m
+[32;1m PASSED [39;22m
+
+[35;1mLoginPageCest:[39;22m User can log in
+Signature: [32mLoginPageCest:userCanLogIn[39m
+Test: [32mtests/acceptance/LoginPageCest.php:userCanLogIn[39m
+[33mScenario --[39m
+[1m I [22mam on page "/login"
+[1m I [22msee "Login"
+[1m I [22msee element "#email"
+[1m I [22mfill field "[test=email-input]","jill@harvard.edu"
+[1m I [22mfill field "[test=password-input]","asdfasdf"
+[1m I [22mclick "button"
+[1m I [22msee "Jill Harvard"
+[1m I [22msee "Logout","nav"
+[32;1m PASSED [39;22m
+
+[35;1mParkingCreatePageCest:[39;22m Adds a new parking
+Signature: [32mParkingCreatePageCest:addsANewParking[39m
+Test: [32mtests/acceptance/ParkingCreatePageCest.php:addsANewParking[39m
+[33mScenario --[39m
+[1m I [22mam on page "/test/refresh-database"
+[1m I [22mam on page "/test/login-as/1"
+[1m I [22mam on page "/parkings/create"
+[1m I [22mfill field "[test=slug-input]","test-parking"
+[1m I [22mfill field "[test=lot-input]","Test Parking"
+[1m I [22mfill field "[test=plate-input]","test-plate"
+[1m I [22mfill field "[test=model-input]","test-model"
+[1m I [22mfill field "[test=make-input]","test-make"
+[1m I [22mselect option "[test=customer-dropdown]",1
+[1m I [22mfill field "[test=year-input]",2000
+[1m I [22mselect option "[test=terms-input]",true
+[1m I [22mfill field "[test=rules-textarea]","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in pulvinar libero. Pellentesque habitant morbi tristique senectus et netus..."
+[1m I [22mclick "[test=submit-button]"
+[1m I [22mam on page "/parkings/create"
+[1m I [22msee "Your Parking Ticket has been created"
+[32;1m PASSED [39;22m
+
+[35;1mParkingCreatePageCest:[39;22m Shows validation
+Signature: [32mParkingCreatePageCest:showsValidation[39m
+Test: [32mtests/acceptance/ParkingCreatePageCest.php:showsValidation[39m
+[33mScenario --[39m
+[1m I [22mam on page "/test/refresh-database"
+[1m I [22mam on page "/test/login-as/1"
+[1m I [22mam on page "/parkings/create"
+[1m I [22mclick "[test=submit-button]"
+[1m I [22msee element "[test=global-error-feedback]"
+[1m I [22msee element "[test=error-field-slug]"
+[32;1m PASSED [39;22m
+
+[35;1mParkingCreatePageCest:[39;22m Prevents duplicate slugs
+Signature: [32mParkingCreatePageCest:preventsDuplicateSlugs[39m
+Test: [32mtests/acceptance/ParkingCreatePageCest.php:preventsDuplicateSlugs[39m
+[33mScenario --[39m
+[1m I [22mam on page "/test/refresh-database"
+[1m I [22mam on page "/test/login-as/1"
+[1m I [22mam on page "/parkings/create"
+[32;1m PASSED [39;22m
+
+[35;1mParkingEditPageCest:[39;22m Edits parking
+Signature: [32mParkingEditPageCest:editsParking[39m
+Test: [32mtests/acceptance/ParkingEditPageCest.php:editsParking[39m
+[33mScenario --[39m
+[1m I [22mam on page "/test/refresh-database"
+[1m I [22mam on page "/test/login-as/1"
+[1m I [22mam on page "/parkings/parkingReceipt-3/edit"
+[1m I [22mfill field "[test=lot-input]","abc-123"
+[1m I [22mclick "[test=update-parking-button]"
+[1m I [22msee "HES-011"
+[32;1m PASSED [39;22m
+
+[35;1mParkingEditPageCest:[39;22m Shows validation
+Signature: [32mParkingEditPageCest:showsValidation[39m
+Test: [32mtests/acceptance/ParkingEditPageCest.php:showsValidation[39m
+[33mScenario --[39m
+[1m I [22mam on page "/test/refresh-database"
+[1m I [22mam on page "/test/login-as/1"
+[1m I [22mam on page "/parkings/parkingReceipt-3/edit"
+[1m I [22mfill field "[test=lot-input]",""
+[1m I [22mclick "[test=update-parking-button]"
+[1m I [22msee element "[test=global-error-feedback]"
+[1m I [22msee element "[test=error-field-parkingLot]"
+[32;1m PASSED [39;22m
+
+[35;1mParkingEditPageCest:[39;22m Prevents duplicate slugs
+Signature: [32mParkingEditPageCest:preventsDuplicateSlugs[39m
+Test: [32mtests/acceptance/ParkingEditPageCest.php:preventsDuplicateSlugs[39m
+[33mScenario --[39m
+[1m I [22mam on page "/test/refresh-database"
+[1m I [22mam on page "/test/login-as/1"
+[1m I [22mam on page "/parkings/parkingReceipt-3/edit"
+[1m I [22mfill field "[test=slug-input]","parkingReceipt-2"
+[1m I [22mclick "[test=update-parking-button]"
+[1m I [22msee "The Parking Space has already been taken.","[test=error-field-slug]"
+[32;1m PASSED [39;22m
+
+[35;1mParkingIndexPageCest:[39;22m Shows parkings
+Signature: [32mParkingIndexPageCest:showsParkings[39m
+Test: [32mtests/acceptance/ParkingIndexPageCest.php:showsParkings[39m
+[33mScenario --[39m
+[1m I [22mam on page "/test/refresh-database"
+[1m I [22mam on page "/test/login-as/1"
+[1m I [22mam on page "/parkings"
+[1m I [22mclick "[test=parking-link-parkingReceipt-3]"
+[1m I [22msee "HES-011"
+[32;1m PASSED [39;22m
+
+[35;1mParkingIndexPageCest:[39;22m Shows new parkings
+Signature: [32mParkingIndexPageCest:showsNewParkings[39m
+Test: [32mtests/acceptance/ParkingIndexPageCest.php:showsNewParkings[39m
+[33mScenario --[39m
+[1m I [22mam on page "/test/refresh-database"
+[1m I [22mam on page "/test/login-as/1"
+[1m I [22mam on page "/parkings"
+[1m I [22mgrab multiple "[test=new-parking-link]"
+[1m I [22massert equals 3,3
+[32;1m PASSED [39;22m
+
+[35;1mParkingListPageCest:[39;22m Shows empty list
+Signature: [32mParkingListPageCest:showsEmptyList[39m
+Test: [32mtests/acceptance/ParkingListPageCest.php:showsEmptyList[39m
+[33mScenario --[39m
+[1m I [22mam on page "/test/refresh-database"
+[1m I [22mam on page "/test/login-as/2"
+[1m I [22mam on page "/list"
+[1m I [22msee element "[test=no-parkings-message]"
+[32;1m PASSED [39;22m
+
+[35;1mParkingListPageCest:[39;22m Adds parking to list
+Signature: [32mParkingListPageCest:addsParkingToList[39m
+Test: [32mtests/acceptance/ParkingListPageCest.php:addsParkingToList[39m
+[33mScenario --[39m
+[1m I [22mam on page "/test/refresh-database"
+[1m I [22mam on page "/test/login-as/2"
+[1m I [22mam on page "/parkings/parkingReceipt-2"
+[1m I [22mclick "[test=add-to-list-button]"
+[1m I [22mfill field "[test=comments-textarea]","Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+[1m I [22mclick "[test=add-to-list-button]"
+[1m I [22mam on page "/list"
+[1m I [22msee "Lorem ipsum dolor sit amet, consectetur adipiscing elit.","[test=parkingReceipt-2-comments-textarea]"
+[32;1m PASSED [39;22m
+
+[35;1mParkingListPageCest:[39;22m Removes parking from list
+Signature: [32mParkingListPageCest:removesParkingFromList[39m
+Test: [32mtests/acceptance/ParkingListPageCest.php:removesParkingFromList[39m
+[33mScenario --[39m
+[1m I [22mam on page "/test/refresh-database"
+[1m I [22mam on page "/test/login-as/1"
+[1m I [22mam on page "/parkings/parkingReceipt-4"
+[1m I [22mclick "[test=parkingReceipt-4-remove-from-list-button]"
+[1m I [22mam on page "/list"
+[1m I [22mdon't see element "[test=parkingReceipt-4-remove-from-list-button]"
+[32;1m PASSED [39;22m
+
+[35;1mParkingListPageCest:[39;22m Update parking on list
+Signature: [32mParkingListPageCest:updateParkingOnList[39m
+Test: [32mtests/acceptance/ParkingListPageCest.php:updateParkingOnList[39m
+[33mScenario --[39m
+[1m I [22mam on page "/test/refresh-database"
+[1m I [22mam on page "/test/login-as/1"
+[1m I [22mam on page "/list"
+[1m I [22mfill field "[test="parkingReceipt-4-comments-textarea"]","Some new comment please..."
+[1m I [22mclick "[test="parkingReceipt-4-update-button"]"
+[1m I [22mam on page "/list"
+[1m I [22msee "Some new comment please...","[test="parkingReceipt-4-comments-textarea"]"
+[32;1m PASSED [39;22m
+
+[35;1mParkingShowPageCest:[39;22m Shows parking
+Signature: [32mParkingShowPageCest:showsParking[39m
+Test: [32mtests/acceptance/ParkingShowPageCest.php:showsParking[39m
+[33mScenario --[39m
+[1m I [22mam on page "/test/refresh-database"
+[1m I [22mam on page "/test/login-as/1"
+[1m I [22mam on page "/parkings/parkingReceipt-2"
+[1m I [22msee "Mur-999"
+[32;1m PASSED [39;22m
+
+[35;1mParkingShowPageCest:[39;22m Deletes parking
+Signature: [32mParkingShowPageCest:deletesParking[39m
+Test: [32mtests/acceptance/ParkingShowPageCest.php:deletesParking[39m
+[33mScenario --[39m
+[1m I [22mam on page "/test/refresh-database"
+[1m I [22mam on page "/test/login-as/1"
+[1m I [22mam on page "/parkings/parkingReceipt-2"
+[1m I [22mclick "[test=delete-button]"
+[1m I [22mclick "[test=confirm-delete-button]"
+[1m I [22mdon't see element "[test=parking-link-parkingReceipt-2]"
+[32;1m PASSED [39;22m
+
+[35;1mParkingShowPageCest:[39;22m Parking not found
+Signature: [32mParkingShowPageCest:parkingNotFound[39m
+Test: [32mtests/acceptance/ParkingShowPageCest.php:parkingNotFound[39m
+[33mScenario --[39m
+[1m I [22mam on page "/test/refresh-database"
+[1m I [22mam on page "/test/login-as/1"
+[1m I [22mam on page "/parkings/parkingReceipt-1"
+[1m I [22msee "Parking is not found"
+[1m I [22msee element "[test=all-parkings-heading]"
+[32;1m PASSED [39;22m
+
+[35;1mUserFeatureCest:[39;22m User can register
+Signature: [32mUserFeatureCest:userCanRegister[39m
+Test: [32mtests/acceptance/UserFeatureCest.php:userCanRegister[39m
+[33mScenario --[39m
+[1m I [22mam on page "/test/refresh-database"
+[1m I [22mam on page "/register"
+[1m I [22mfill field "[test=name-input]","Test User"
+[1m I [22mfill field "[test=email-input]","test@email.com"
+[1m I [22mfill field "[test=password-input]","asdfasdf"
+[1m I [22mfill field "[test=password-confirm-input]","asdfasdf"
+[1m I [22mclick "[test=register-button]"
+[1m I [22msee "Test User"
+[1m I [22msee "Logout","nav"
+[32;1m PASSED [39;22m
+
+[35;1mUserFeatureCest:[39;22m Registration is validated
+Signature: [32mUserFeatureCest:registrationIsValidated[39m
+Test: [32mtests/acceptance/UserFeatureCest.php:registrationIsValidated[39m
+[33mScenario --[39m
+[1m I [22mam on page "/test/refresh-database"
+[1m I [22mam on page "/register"
+[1m I [22mfill field "[test=name-input]","Test User"
+[1m I [22mfill field "[test=email-input]","jill@harvard.edu"
+[1m I [22mfill field "[test=password-input]","asdfasdf"
+[1m I [22mfill field "[test=password-confirm-input]","asdfasdf"
+[1m I [22mclick "[test=register-button]"
+[1m I [22msee "The email has already been taken."
+[32;1m PASSED [39;22m
+
+[35;1mUserFeatureCest:[39;22m User can log in
+Signature: [32mUserFeatureCest:userCanLogIn[39m
+Test: [32mtests/acceptance/UserFeatureCest.php:userCanLogIn[39m
+[33mScenario --[39m
+[1m I [22mam on page "/test/refresh-database"
+[1m I [22mam on page "/login"
+[1m I [22mfill field "[test=email-input]","jill@harvard.edu"
+[1m I [22mfill field "[test=password-input]","asdfasdf"
+[1m I [22mclick "[test=login-button]"
+[1m I [22msee "Jill Harvard"
+[1m I [22msee "Logout","nav"
+[32;1m PASSED [39;22m
+
+[35;1mUserFeatureCest:[39;22m User can logout
+Signature: [32mUserFeatureCest:userCanLogout[39m
+Test: [32mtests/acceptance/UserFeatureCest.php:userCanLogout[39m
+[33mScenario --[39m
+[1m I [22mam on page "/test/refresh-database"
+[1m I [22mam on page "/test/login-as/1"
+[1m I [22mam on page "/"
+[1m I [22mclick "[test=logout-button]"
+[1m I [22msee element "[test=login-link]"
+[32;1m PASSED [39;22m
+
+[35;1mUserFeatureCest:[39;22m Login is validated
+Signature: [32mUserFeatureCest:loginIsValidated[39m
+Test: [32mtests/acceptance/UserFeatureCest.php:loginIsValidated[39m
+[33mScenario --[39m
+[1m I [22mam on page "/test/refresh-database"
+[1m I [22mam on page "/login"
+[1m I [22mfill field "[test=email-input]","jill@harvard.edu"
+[1m I [22mfill field "[test=password-input]","bad-password"
+[1m I [22mclick "[test=login-button]"
+[1m I [22msee "These credentials do not match our records."
+[32;1m PASSED [39;22m
+
+[35;1mUserFeatureCest:[39;22m Guests cant visit restricted pages
+Signature: [32mUserFeatureCest:guestsCantVisitRestrictedPages[39m
+Test: [32mtests/acceptance/UserFeatureCest.php:guestsCantVisitRestrictedPages[39m
+[33mScenario --[39m
+[1m I [22mam on page "/test/refresh-database"
+[1m I [22mam on page "/parkings"
+[1m I [22msee element "[test=login-button]"
+[32;1m PASSED [39;22m
+
+[35;1mSearchPageCest:[39;22m Search yields results
+Signature: [32mSearchPageCest:searchYieldsResults[39m
+Test: [32mtests/acceptance/WelcomePageCest.php:searchYieldsResults[39m
+[33mScenario --[39m
+[1m I [22mam on page "/test/refresh-database"
+[1m I [22mam on page "/test/login-as/1"
+[1m I [22mam on page "/"
+[1m I [22mfill field "[test=search-input]","Lot-West"
+[1m I [22mclick "[test=search-button]"
+[1m I [22msee "Lot-West"
+[1m I [22mgrab multiple "[test=search-result-link]"
+[1m I [22massert equals 4,4
+[32;1m PASSED [39;22m
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Time: 1.14 minutes, Memory: 18.99 MB
+
+[30;42mOK (24 tests, 31 assertions)[0m

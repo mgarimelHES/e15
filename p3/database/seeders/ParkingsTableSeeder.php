@@ -20,7 +20,7 @@ class ParkingsTableSeeder extends Seeder
      * This run method is the first method you should have in all your Seeder class files
      * This method will be invoked when we invoke this seeder
      * In this method you should put code that will cause data to be entered into your tables
-     * (in this case, that's the `books` table)
+     * (in this case, that's the `parkings` table)
      */
     public function run()
     {
@@ -28,7 +28,7 @@ class ParkingsTableSeeder extends Seeder
         $this->faker = Factory::create();
 
 
-        # Three different examples of how to add books
+        # Three different examples of how to add parkings
         //$this->addOneParking();
         $this->addAllParkingsFromParkingsDotJsonFile();
         // $this->addRandomlyGeneratedParkingsUsingFaker();
@@ -70,7 +70,7 @@ class ParkingsTableSeeder extends Seeder
         foreach ($parkings as $slug => $parkingData) {
 
              # Extract just the last name from the parking data...
-            # F. Scott Fitzgerald => ['F.', 'Scott', 'Fitzgerald'] => 'Fitzgerald'
+            # For example, F. Scott Fitzgerald => ['F.', 'Scott', 'Fitzgerald'] => 'Fitzgerald'
             //$name = explode(' ', $parkingData['owner']);
             //$lastName = array_pop($name);
             $lastName = 'Smith';
