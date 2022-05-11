@@ -5,11 +5,13 @@ b.description {
   padding-bottom:10px;
   text-align:justify;
 }
+
 img.cover {
   width:125px;
   height:175px;
   margin-bottom:25px;
 }
+
 .parkingActions {
   list-style-type: none;
 }

@@ -1,7 +1,7 @@
 @extends('layouts/main')
 
 @section('content')
-    <h1>Register</h1>
+    <h1>Register a User</h1>
 
     Already have an account? <a href='/login'>Login here...</a>
 

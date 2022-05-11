@@ -21,8 +21,6 @@ class ListController extends Controller
     {
         $parking = Parking::findBySlug($slug);
  
-        // dump($request);
- 
         return view('list/add', ['parking' => $parking ]);
     }
 
@@ -31,8 +29,8 @@ class ListController extends Controller
     */
     public function save(Request $request, $slug)
     {
-        # TODO: Validate incoming data, making sure they entered a note
-        dump($request->all());
+        # TODO: Validate incoming data, making sure they entered a comment or something
+        # dump($request->all());
         
         $user = $request->user();
         $parking = Parking::findBySlug($slug);
@@ -65,7 +63,7 @@ class ListController extends Controller
     }
      
     /**
-     * DELETE /list/{slug}/destroy
+     * DELETE /list/{slug}/destroy - delete a parking from the list
      */
     public function destroy(Request $request, $slug)
     {
@@ -75,6 +73,8 @@ class ListController extends Controller
 
         # Because we can delete a parking  from either the individual parking page
         # or the list page, we redirect to whatever page this request came from
+        #
+
         return redirect($request->headers->get('referer'))->with([
             'flash-alert' => 'The parking ' . $parking->license_plate . ' was removed from your parking list'
         ]);

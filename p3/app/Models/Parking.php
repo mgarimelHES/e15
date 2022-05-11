@@ -15,14 +15,18 @@ class Parking extends Model
     {
         return self::where('slug', '=', $slug)->first();
     }
-
+    /**
+        * custom method to find parking for a customer
+        */
     public function customer()
     {
         # Parking belongs to a Customer
         # Define an inverse one-to-many relationship.
         return $this->belongsTo('App\Models\Customer');
     }
-
+    /**
+        * custom method to find pivot information by slug
+        */
     public function users()
     {
         return $this->belongsToMany('App\Models\User')

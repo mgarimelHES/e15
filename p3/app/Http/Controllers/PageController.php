@@ -23,7 +23,7 @@ class PageController extends Controller
 
     public function contact()
     {
-        # Return the view to display the contact information
+        # Return the view to display the support contact information for the Parking application
         return view('pages/contact');
     }
 }

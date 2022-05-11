@@ -28,7 +28,7 @@
         </p>
 
 
-        <ul class='bookActions'>
+        <ul class='parkingActions'>
 
             <li><a test='edit-button' href='/parkings/{{ $parking->slug }}/edit' dusk='edit-button'><i
                         class="fa fa-edit"></i> Edit</a>

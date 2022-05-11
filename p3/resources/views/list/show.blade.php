@@ -1,5 +1,9 @@
 @extends('layouts/main')
 
+@section('head')
+    <link href='/css/list/show.css' rel='stylesheet'>
+@endsection
+
 @section('title')
     Your Parking List
 @endsection

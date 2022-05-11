@@ -15,4 +15,13 @@ class Customer extends Model
         # Define a one-to-many relationship.
         return $this->hasMany('App\Models\Parking');
     }
+
+    /**
+     *  Get customer drop list
+     */
+    public static function getForDropdown()
+    {
+        # Get data of customers in alphabetical order by last name
+        return self::orderBy('last_name')->select(['id', 'first_name', 'last_name'])->get();
+    }
 }
